@@ -114,6 +114,8 @@
         .bg-candidate { background: linear-gradient(135deg, rgba(43, 64, 54, 0.88), rgba(61, 90, 76, 0.78)), url('candidate.jpg') center/cover no-repeat fixed var(--g); }
         .bg-admin { background: linear-gradient(135deg, rgba(30, 41, 59, 0.92), rgba(43, 64, 54, 0.88)), url('admin.jpg') center/cover no-repeat fixed var(--slate-800); }
         .bg-overlay { background: rgba(15, 23, 42, 0.45); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: fixed; inset: 0; overflow-y: auto; padding: 1.5rem; z-index: 10; }
+        #view-admin-login { background: linear-gradient(135deg, rgba(30,41,59,.25), rgba(30,41,59,.75)), url('admin.jpg') center/cover no-repeat fixed var(--slate-800); }
+        #view-admin-login .bg-overlay { background: rgba(15, 23, 42, 0.65); }
 
         .glass { background: var(--glass); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); padding: 2rem; max-width: 440px; width: 100%; }
         #view-cand-login, #view-cand-signup { background: linear-gradient(135deg, rgba(43,64,54,.20), rgba(248,250,252,.78)), url('candidate-lab.jpg') center/cover no-repeat fixed var(--paper); }
@@ -819,7 +821,6 @@
         const SUPABASE_URL = 'https://xqiobvatqunvvufynjts.supabase.co';
         const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_gRBvi3jzR1Qr60_qZ0c6iw_g5zxrOow'; 
         
-        // Single client declaration to eliminate duplicate identifier collisions
         window.sbClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY) : null;
 
         const state = { user: null, profile: null, exam: null, adminCurrentCourse: null, candExamSemFilter: 'ALL', candResultSemFilter: 'ALL', adminCourseSemFilter: 'ALL', adminCourseLevelFilter: 'ALL', adminEnrollSemFilter: 'ALL', adminEnrollLevelFilter: 'ALL', adminCandLevelFilter: 'ALL', adminResLevelFilter: 'ALL', candCourseData: { enrolled: [], available: [] }, passEyeTimers: {}, attemptMarkData: null, settings: {}, tags: [], publicCourses: [] };
@@ -943,14 +944,18 @@
                     state.user = session.user; state.profile = prof;
                     
                     if (['super_admin', 'admin', 'exam_manager'].includes(String(prof.role || '').toLowerCase())) {
-                        document.querySelectorAll('.admin-name-display').forEach(el => el.textContent = prof.full_name);
+                        const words = (prof.full_name || '').trim().split(/\s+/);
+                        const greetingName = words.length > 1 ? `${words[0]} ${words[1]}` : (words[0] || '');
+                        document.querySelectorAll('.admin-name-display').forEach(el => el.textContent = greetingName);
                         document.querySelectorAll('.admin-role-badge-sidebar').forEach(el => el.textContent = prof.role);
                         const topBadge = document.getElementById('admin-top-role-badge');
                         if (topBadge) { topBadge.textContent = prof.role === 'super_admin' ? 'Super Admin' : 'Admin'; topBadge.className = 'badge ' + (prof.role==='super_admin' ? 'badge-green' : 'badge-amber'); }
                         app.nav('view-admin-portal'); app.admin.init();
                     } else if (['candidate', 'student'].includes(String(prof.role || '').toLowerCase())) {
                         const lvl = (prof.level || 100) + 'L';
-                        document.querySelectorAll('.cand-name-display').forEach(el => el.textContent = prof.full_name);
+                        const words = (prof.full_name || '').trim().split(/\s+/);
+                        const greetingName = words.length > 1 ? `${words[0]} ${words[1]}` : (words[0] || '');
+                        document.querySelectorAll('.cand-name-display').forEach(el => el.textContent = greetingName);
                         document.querySelectorAll('.cand-user-display').forEach(el => el.textContent = '@' + prof.username);
                         document.querySelectorAll('.cand-level-badge').forEach(el => el.textContent = lvl);
                         document.querySelectorAll('.cand-level-dept-display').forEach(el => el.textContent = `${lvl} • ${prof.department||''}`);
@@ -1365,10 +1370,67 @@
                     const tbody = document.getElementById(role==='candidate' ? 'adm-cand-list' : 'adm-admins-list');
                     if (role==='candidate') {
                         const lf = state.adminCandLevelFilter; const f = d.filter(u => lf==='ALL' || u.level===Number(lf));
-                        tbody.innerHTML = f.map(u => `<tr><td><b>${u.full_name}</b></td><td>@${u.username}</td><td>${u.level}L</td><td>${u.gpa}</td><td>${u.status}</td><td>${u.total_units}u</td><td><button class="btn btn-secondary py-1" onclick="app.admin.resetPass('${u.id}')">Reset</button> ${isS?`<button class="btn btn-secondary text-red py-1" onclick="app.admin.delUser('${u.id}')">Del</button>`:''}</td></tr>`).join('');
+                        tbody.innerHTML = f.map(u => `<tr><td><b>${u.full_name}</b></td><td>@${u.username}</td><td>${u.level}L</td><td>${u.gpa}</td><td>${u.status}</td><td>${u.total_units}u</td><td><button class="btn btn-primary py-1 text-xs mr-1" onclick="app.admin.openEnrollModal('${u.id}', '${app.ui.esc(u.full_name)}')">Enroll</button><button class="btn btn-secondary py-1 text-xs" onclick="app.admin.resetPass('${u.id}')">Reset</button> ${isS?`<button class="btn btn-secondary text-red py-1 text-xs" onclick="app.admin.delUser('${u.id}')">Del</button>`:''}</td></tr>`).join('');
                     } else {
                         tbody.innerHTML = d.map(u => `<tr><td><b>${u.full_name}</b></td><td>${u.email}</td><td>${u.admin_role}</td><td>${u.status}</td><td>${isS && u.id!==state.user.id ? `<button class="btn btn-secondary text-red py-1" onclick="app.admin.delUser('${u.id}')">Del</button>`:''}</td></tr>`).join('');
                     }
+                },
+                openEnrollModal: async (candId, candName) => {
+                    const courses = await app.api.rpc('public_courses');
+                    const candCourses = await app.api.rpc('admin_get_candidate_courses', { p_candidate_id: candId });
+                    const enrolledIds = new Set((candCourses || []).map(c => c.id));
+                    window._adminEnrollState = { candId, enrolledIds };
+                    app.admin.renderEnrollModalContent(candName, courses);
+                },
+                renderEnrollModalContent: (candName, courses) => {
+                    const stateObj = window._adminEnrollState;
+                    const search = (document.getElementById('adm-enr-modal-search')?.value || '').toLowerCase();
+                    const semF = document.getElementById('adm-enr-modal-sem')?.value || 'ALL';
+                    const lvlF = document.getElementById('adm-enr-modal-lvl')?.value || 'ALL';
+                    
+                    let filtered = courses.filter(c => {
+                        if(semF !== 'ALL' && c.semester !== semF) return false;
+                        if(lvlF !== 'ALL' && c.level !== Number(lvlF)) return false;
+                        if(search && !(`${c.code} ${c.title}`).toLowerCase().includes(search)) return false;
+                        return true;
+                    });
+                    
+                    let totalUnits = 0;
+                    stateObj.enrolledIds.forEach(id => { const ex = courses.find(e => e.id === id); if(ex) totalUnits += Number(ex.units); });
+                    const minU = state.settings.min_units || 18; const maxU = state.settings.max_units || 25;
+                    const isValid = totalUnits >= minU && totalUnits <= maxU;
+
+                    app.ui.modal(`<div class="modal-header"><h3 class="font-bold">Enroll Candidate: ${app.ui.esc(candName)}</h3><button class="modal-close" onclick="app.ui.modal(false)">&times;</button></div>
+                    <div class="modal-body flex-col gap-3">
+                        <div class="flex justify-between items-center p-3 bg-slate-50 border rounded"><span class="text-sm font-semibold">Total Registered Units:</span><span class="badge ${isValid?'badge-green':'badge-red'}">${totalUnits} Units</span></div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                            <input type="text" id="adm-enr-modal-search" class="input text-sm py-1.5" placeholder="Search code/title..." value="${search}" oninput="app.admin.renderEnrollModalContent('${app.ui.esc(candName)}', window._allAdminCoursesCache)">
+                            <select id="adm-enr-modal-sem" class="select text-sm py-1.5" onchange="app.admin.renderEnrollModalContent('${app.ui.esc(candName)}', window._allAdminCoursesCache)"><option value="ALL">All Semesters</option><option value="First Semester" ${semF==='First Semester'?'selected':''}>First</option><option value="Second Semester" ${semF==='Second Semester'?'selected':''}>Second</option></select>
+                            <select id="adm-enr-modal-lvl" class="select text-sm py-1.5" onchange="app.admin.renderEnrollModalContent('${app.ui.esc(candName)}', window._allAdminCoursesCache)"><option value="ALL">All Levels</option><option value="100" ${lvlF==='100'?'selected':''}>100L</option><option value="200" ${lvlF==='200'?'selected':''}>200L</option><option value="300" ${lvlF==='300'?'selected':''}>300L</option><option value="400" ${lvlF==='400'?'selected':''}>400L</option></select>
+                        </div>
+                        <div class="flex-col gap-2 p-3 border rounded-lg bg-glass overflow-y-auto max-h-[240px]">
+                            ${filtered.map(cr => {
+                                const isCh = stateObj.enrolledIds.has(cr.id);
+                                return `<label class="flex items-center justify-between gap-2 p-2 border rounded cursor-pointer hover:bg-slate-50 text-sm ${isCh?'border-emerald-600 bg-emerald-50/40':''}"><div class="flex items-center gap-2"><input type="checkbox" value="${cr.id}" ${isCh?'checked':''} onchange="app.admin.toggleAdminEnrollCourse('${cr.id}', this.checked)"><span><strong>${app.ui.esc(cr.code)}</strong> — ${app.ui.esc(cr.title)}</span></div><div class="flex items-center gap-1.5"><span class="badge badge-gray">${cr.level}L</span><span class="badge badge-green">${cr.units}u</span></div></label>`;
+                            }).join('') || '<p class="text-sm text-gray">No courses found.</p>'}
+                        </div>
+                        <div class="flex items-center gap-2 mt-2"><input type="checkbox" id="adm-enr-override" class="input" style="width:auto;"><label for="adm-enr-override" class="text-xs font-semibold cursor-pointer">Override min/max unit validation rule</label></div>
+                        <button class="btn btn-primary w-full mt-2" onclick="app.admin.saveAdminEnrollments('${app.ui.esc(candName)}')">Save Candidate Enrollments</button>
+                    </div>`, true);
+                    window._allAdminCoursesCache = courses;
+                },
+                toggleAdminEnrollCourse: (id, checked) => {
+                    const stateObj = window._adminEnrollState;
+                    if(checked) stateObj.enrolledIds.add(id); else stateObj.enrolledIds.delete(id);
+                    app.admin.renderEnrollModalContent('', window._allAdminCoursesCache);
+                },
+                saveAdminEnrollments: async (candName) => {
+                    const stateObj = window._adminEnrollState;
+                    const override = document.getElementById('adm-enr-override')?.checked || false;
+                    try {
+                        await app.api.rpc('admin_enroll_candidate', { p_candidate_id: stateObj.candId, p_exam_ids: Array.from(stateObj.enrolledIds), p_override: override });
+                        app.ui.modal(false); app.ui.toast(`Enrollments updated for ${candName}!`); app.admin.loadUsers('candidate');
+                    } catch(err) { app.ui.toast(err.message, true); }
                 },
                 resetPass: (id) => { app.ui.modal(`<div class="modal-header"><h3 class="font-bold">Reset Password</h3><button class="modal-close" onclick="app.ui.modal(false)">&times;</button></div><div class="modal-body"><div class="input-group"><label>New password (min 6 characters)</label><input type="text" id="rp-pass" class="input" value=""></div><button class="btn btn-primary w-full" onclick="app.admin.doReset('${id}')">Save New Password</button></div>`); },
                 doReset: async (id) => { const p = document.getElementById('rp-pass').value.trim(); try { await app.api.rpc('admin_reset_password', { id, password: p }); app.ui.modal(false); app.ui.toast("Password reset. Give the new password to the candidate."); } catch(err) { app.ui.toast(err.message, true); } },
@@ -1450,13 +1512,14 @@
                 
                 modals: {
                     openCourse: () => app.ui.modal(`<div class="modal-header"><h3 class="font-bold">Add Course</h3><button class="modal-close" onclick="app.ui.modal(false)">&times;</button></div><div class="modal-body"><form onsubmit="app.admin.createCourse(event)"><div class="input-group"><label>Code</label><input id="ac-code" class="input" required></div><div class="input-group"><label>Title</label><input id="ac-title" class="input" required></div><div class="input-group"><label>Units</label><input id="ac-units" type="number" class="input" required value="3"></div><div class="input-group"><label>Level</label><select id="ac-level" class="select"><option value="100">100</option><option value="200">200</option><option value="300">300</option><option value="400">400</option></select></div><div class="input-group"><label>Semester</label><select id="ac-sem" class="select"><option value="First Semester">First</option><option value="Second Semester">Second</option></select></div><div class="input-group"><label>Exam Tag</label><select id="ac-tag" class="select">${state.tags.map(t=>`<option value="${t}">${t}</option>`).join('')}<option value="Other">Other</option></select></div><button class="btn btn-primary w-full">Save</button></form></div>`),
-                    openUser: (r) => { if(r==='admin'&&state.profile.role!=='super_admin') return; app.ui.modal(`<div class="modal-header"><h3 class="font-bold">Add ${r}</h3><button class="modal-close" onclick="app.ui.modal(false)">&times;</button></div><div class="modal-body"><form onsubmit="app.admin.createUser(event,'${r}')"><div class="input-group"><label>Full Name</label><input id="au-name" class="input" required></div><div class="input-group"><label>Username</label><input id="au-user" class="input" required></div><div class="input-group"><label>Password</label><div class="relative"><input type="password" id="au-pass" class="input" required><svg class="eye-icon" onclick="app.ui.togglePass('au-pass')" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div></div>${r==='admin'?`<div class="input-group"><label>Role</label><select id="au-arole" class="select"><option value="Exam manager">Standard</option><option value="Super admin">Super</option></select></div>`:`<div class="input-group"><label>Level</label><select id="au-lvl" class="select"><option value="100">100</option><option value="200">200</option><option value="300">300</option><option value="400">400</option></select></div>`}<button class="btn btn-primary w-full">Save</button></form></div>`); },
-                    openAddQ: () => app.ui.modal(`<div class="modal-header"><h3 class="font-bold">Add Question</h3><button class="modal-close" onclick="app.ui.modal(false)">&times;</button></div><div class="modal-body"><form onsubmit="app.admin.addManQ(event)"><select id="mq-type" class="select mb-2" onchange="document.getElementById('mq-opt').classList.toggle('hidden',this.value!=='mcq'); document.getElementById('mq-blank').classList.toggle('hidden',this.value!=='blank'); document.getElementById('mq-blank').style.display=this.value==='blank'?'block':'none';"><option value="mcq">MCQ</option><option value="tf">T/F</option><option value="blank">Fill in the Gap</option></select><textarea id="mq-txt" class="textarea mb-2" required placeholder="Question text..."></textarea><div id="mq-opt"><input id="mqa" class="input mb-1" placeholder="A"><input id="mqb" class="input mb-1" placeholder="B"><input id="mqc" class="input mb-1" placeholder="C"><input id="mqd" class="input mb-1" placeholder="D"><select id="mqans" class="select mb-2"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div id="mq-blank" class="hidden"><div class="input-group"><label>Answer Key (Correct Answer) - Use | for multiples</label><input id="mqblankk" class="input mb-2" placeholder="e.g. Sunday|sun"></div></div><button class="btn btn-primary w-full">Save</button></form></div>`),
+                    openUser: (r) => { if(r==='admin'&&state.profile.role!=='super_admin') return; app.ui.modal(`<div class="modal-header"><h3 class="font-bold">Add ${r}</h3><button class="modal-close" onclick="app.ui.modal(false)">&times;</button></div><div class="modal-body"><form onsubmit="app.admin.createUser(event,'${r}')"><div class="input-group"><label>Full Name</label><input id="au-name" class="input" required></div><div class="input-group"><label>Username</label><input id="au-user" class="input" required></div><div class="input-group"><label>Password</label><div class="relative"><input type="password" id="au-pass" class="input" required><svg class="eye-icon" onclick="app.ui.togglePass('au-pass')" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div></div>${r==='admin'?`<div class="input-group"><label>Role</label><select id="au-arole" class="select"><option value="Exam manager">Standard</option><option value="Super admin">Super</option></select></div>`:`<div class="input-group"><label>Level</label><select id="au-lvl" class="select"><option value="100">100</option><option value="200">200</option><option value="300">300</option><option value="400">400</option></select></div>`}<button class="btn btn-primary w-full">Save</button></form></div>`),
+                    openAddQ: () => app.ui.modal(`<div class="modal-header"><h3 class="font-bold">Add Question</h3><button class="modal-close" onclick="app.ui.modal(false)">&times;</button></div><div class="modal-body"><form onsubmit="app.admin.addManQ(event)"><select id="mq-type" class="select mb-2" onchange="const v=this.value; document.getElementById('mq-opt').style.display=v==='mcq'?'block':'none'; document.getElementById('mq-tf').style.display=v==='tf'?'block':'none'; document.getElementById('mq-blank').style.display=v==='blank'?'block':'none';"><option value="mcq">MCQ</option><option value="tf">T/F</option><option value="blank">Fill in the Gap</option></select><textarea id="mq-txt" class="textarea mb-2" required placeholder="Question text..."></textarea><div id="mq-opt"><input id="mqa" class="input mb-1" placeholder="A"><input id="mqb" class="input mb-1" placeholder="B"><input id="mqc" class="input mb-1" placeholder="C"><input id="mqd" class="input mb-1" placeholder="D"><select id="mqans" class="select mb-2"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div id="mq-tf" style="display:none;"><div class="input-group"><label>Correct Answer</label><select id="mqtfans" class="select mb-2"><option value="True">True</option><option value="False">False</option></select></div></div><div id="mq-blank" style="display:none;"><div class="input-group"><label>Answer Key (Correct Answer) - Use | for multiples</label><input id="mqblankk" class="input mb-2" placeholder="e.g. Sunday|sun"></div></div><button class="btn btn-primary w-full">Save</button></form></div>`),
                     openEditQ: async (qid) => {
                         const qs = await app.api.rpc('admin_get_questions', {p_exam_id: state.adminCurrentCourse.id}); const q = qs.find(x=>x.q_id===qid); if(!q) return;
-                        app.ui.modal(`<div class="modal-header"><h3 class="font-bold">Edit Question</h3><button class="modal-close" onclick="app.ui.modal(false)">&times;</button></div><div class="modal-body"><form onsubmit="app.admin.updateQ(event, '${qid}')"><textarea id="eq-txt" class="textarea mb-2" required>${q.q_text}</textarea>${q.q_type==='blank' ? `<div class="input-group"><label>Answer Key (Use | for multiples)</label><input id="eq-blankk" class="input mb-2" required value="${app.ui.escMap['"']?q.options[0]?.text.replace(/"/g, '&quot;'):q.options[0]?.text}"></div>` : (q.q_type==='mcq' ? `<input id="eqa" class="input mb-1" value="${q.options[0]?.text}"><input id="eqb" class="input mb-1" value="${q.options[1]?.text}"><input id="eqc" class="input mb-1" value="${q.options[2]?.text}"><input id="eqd" class="input mb-1" value="${q.options[3]?.text}"><select id="eqans" class="select mb-2"><option value="A" ${q.options[0]?.is_correct?'selected':''}>A</option><option value="B" ${q.options[1]?.is_correct?'selected':''}>B</option><option value="C" ${q.options[2]?.is_correct?'selected':''}>C</option><option value="D" ${q.options[3]?.is_correct?'selected':''}>D</option></select>` : '')}<button class="btn btn-primary w-full">Save & Regrade</button></form></div>`);
+                        const isTfCor = q.options?.find(o => o.text?.toLowerCase() === 'true')?.is_correct ?? true;
+                        app.ui.modal(`<div class="modal-header"><h3 class="font-bold">Edit Question</h3><button class="modal-close" onclick="app.ui.modal(false)">&times;</button></div><div class="modal-body"><form onsubmit="app.admin.updateQ(event, '${qid}')"><textarea id="eq-txt" class="textarea mb-2" required>${q.q_text}</textarea>${q.q_type==='blank' ? `<div class="input-group"><label>Answer Key (Use | for multiples)</label><input id="eq-blankk" class="input mb-2" required value="${app.ui.escMap['"']?q.options[0]?.text.replace(/"/g, '&quot;'):q.options[0]?.text}"></div>` : (q.q_type==='tf' ? `<div class="input-group"><label>Correct Answer</label><select id="eqtfans" class="select mb-2"><option value="True" ${isTfCor?'selected':''}>True</option><option value="False" ${!isTfCor?'selected':''}>False</option></select></div>` : `<input id="eqa" class="input mb-1" value="${q.options[0]?.text}"><input id="eqb" class="input mb-1" value="${q.options[1]?.text}"><input id="eqc" class="input mb-1" value="${q.options[2]?.text}"><input id="eqd" class="input mb-1" value="${q.options[3]?.text}"><select id="eqans" class="select mb-2"><option value="A" ${q.options[0]?.is_correct?'selected':''}>A</option><option value="B" ${q.options[1]?.is_correct?'selected':''}>B</option><option value="C" ${q.options[2]?.is_correct?'selected':''}>C</option><option value="D" ${q.options[3]?.is_correct?'selected':''}>D</option></select>`)}<button class="btn btn-primary w-full">Save & Regrade</button></form></div>`);
                     },
-                    openCsvQ: () => app.ui.modal(`<div class="modal-header"><h3 class="font-bold">Bulk CSV Upload</h3><button class="modal-close" onclick="app.ui.modal(false)">&times;</button></div><div class="modal-body"><textarea id="csv-txt" class="textarea mb-2" style="font-family:monospace; font-size:0.8rem; height:150px;" placeholder="type,question,optA,optB,optC,optD,answer"></textarea><button class="btn btn-primary w-full" onclick="app.admin.procCsv()">Import</button><button class="btn btn-secondary w-full mt-2" onclick="app.admin.dlCsv()">Download Sample CSV</button></div>`, true),
+                    openCsvQ: () => app.ui.modal(`<div class="modal-header"><h3 class="font-bold">Bulk CSV Upload</h3><button class="modal-close" onclick="app.ui.modal(false)">&times;</button></div><div class="modal-body"><div class="input-group mb-2"><label>Choose CSV File</label><input type="file" id="csv-file-input" class="input text-sm py-1.5" accept=".csv" onchange="app.admin.previewCsvFile(this)"></div><div id="csv-preview-area" class="mb-3"></div><div id="csv-import-actions" class="hidden"><button class="btn btn-primary w-full" id="btn-import-valid" onclick="app.admin.procCsvFile()">Import Valid Rows</button></div><button class="btn btn-secondary w-full mt-2" onclick="app.admin.dlCsv()">Download Sample CSV</button><details class="mt-3 text-xs text-gray"><summary class="cursor-pointer font-semibold">Or paste CSV text as fallback</summary><textarea id="csv-txt" class="textarea mt-2 mb-2" style="font-family:monospace; font-size:0.8rem; height:100px;" placeholder="type,question,optA,optB,optC,optD,answer" oninput="app.admin.previewCsvText(this.value)"></textarea></details></div>`, true),
                     openFlagReview: async (id) => {
                         const d = await app.api.rpc('admin_flags', {only_open:false}); const f = d.find(x=>x.id===id); if(!f) return;
                         app.ui.modal(`<div class="modal-header"><h3 class="font-bold">Review Flag</h3><button class="modal-close" onclick="app.ui.modal(false)">&times;</button></div><div class="modal-body"><div class="mb-4"><strong>Question:</strong><br>${app.ui.esc(f.q_text)}</div><div class="grid grid-cols-2 gap-4 mb-4 bg-paper p-4 rounded border"><div><strong>Candidate Answer:</strong><br>${app.ui.esc(f.candidate_answer) || '<i>None</i>'}</div><div><strong>Correct Answer:</strong><br>${app.ui.esc(f.correct_answer) || '<i>None</i>'}</div></div><div class="input-group"><label>Action</label><select id="fr-act" class="select" onchange="document.getElementById('fr-mark-wrap').style.display = (this.value==='override'||this.value==='bonus') ? 'block' : 'none'"><option value="none">-- Select Action --</option><option value="reviewed">Mark as Reviewed (No change)</option><option value="override">Set Manual Mark</option><option value="bonus">Award Bonus Mark</option><option value="reopen">Reopen Flag</option></select></div><div class="input-group hidden" id="fr-mark-wrap"><label>Mark Value</label><input type="number" id="fr-mark" class="input" step="0.5" value="1"></div><div class="input-group"><label>Reply / Admin Note</label><input type="text" id="fr-note" class="input" placeholder="Optional explanation sent to candidate"></div><button class="btn btn-primary w-full mt-2" onclick="app.admin.submitFlagReview('${id}')">Apply Resolution</button></div>`);
@@ -1468,7 +1531,7 @@
                 addManQ: async (e) => {
                     e.preventDefault(); const t=document.getElementById('mq-type').value, txt=document.getElementById('mq-txt').value; let opts=[];
                     if(t==='mcq') { const ans=document.getElementById('mqans').value; opts=[{text:document.getElementById('mqa').value,is_correct:ans==='A'},{text:document.getElementById('mqb').value,is_correct:ans==='B'},{text:document.getElementById('mqc').value,is_correct:ans==='C'},{text:document.getElementById('mqd').value,is_correct:ans==='D'}]; }
-                    else if(t==='tf') { opts=[{text:'True',is_correct:true},{text:'False',is_correct:false}]; } 
+                    else if(t==='tf') { const ans=document.getElementById('mqtfans').value==='True'; opts=[{text:'True',is_correct:ans},{text:'False',is_correct:!ans}]; } 
                     else { const k=document.getElementById('mqblankk').value; if(!k.trim()) return app.ui.toast("Answer key required for Fill in the Gap.",true); opts=[{text:k,is_correct:true}]; }
                     await app.api.rpc('admin_add_questions', {exam_id:state.adminCurrentCourse.id, items:[{q_type:t, q_text:txt, options:opts}]}); app.ui.modal(false); app.admin.loadQuestions(state.adminCurrentCourse.id);
                 },
@@ -1476,6 +1539,7 @@
                     e.preventDefault(); const qs=await app.api.rpc('admin_get_questions', {p_exam_id:state.adminCurrentCourse.id}); const q=qs.find(x=>x.q_id===qid);
                     q.q_text = document.getElementById('eq-txt').value;
                     if(q.q_type==='blank') { q.options[0] = { text: document.getElementById('eq-blankk').value, is_correct: true }; }
+                    else if(q.q_type==='tf') { const ans=document.getElementById('eqtfans').value==='True'; q.options=[{text:'True',is_correct:ans},{text:'False',is_correct:!ans}]; }
                     else if (q.q_type==='mcq') { const ans=document.getElementById('eqans').value; q.options=[{text:document.getElementById('eqa').value,is_correct:ans==='A'},{text:document.getElementById('eqb').value,is_correct:ans==='B'},{text:document.getElementById('eqc').value,is_correct:ans==='C'},{text:document.getElementById('eqd').value,is_correct:ans==='D'}]; }
                     await app.api.rpc('admin_update_question', { exam_id: state.adminCurrentCourse.id, q_id: qid, q_text: q.q_text, options: q.options });
                     app.ui.modal(false); app.admin.loadQuestions(state.adminCurrentCourse.id); app.ui.toast("Saved and attempts regraded.");
@@ -1486,26 +1550,74 @@
                     for (let i = 0; i < line.length; i++) { const ch = line[i]; if (ch === '"') { if (inQuotes && line[i + 1] === '"') { cur += '"'; i++; } else { inQuotes = !inQuotes; } } else if (ch === ',' && !inQuotes) { result.push(cur.trim()); cur = ''; } else { cur += ch; } }
                     result.push(cur.trim()); return result;
                 },
-                procCsv: async () => {
-                    const raw = document.getElementById('csv-txt').value.trim(); if(!raw) return;
+                parseCsvRows: (raw) => {
                     const lines = raw.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n').filter(l => l.trim().length > 0);
-                    const validItems = [];
+                    const parsedRows = [];
                     for(let i=0; i<lines.length; i++) {
-                        const cols = app.admin.parseCsvLine(lines[i]); if(cols.length < 2) continue;
-                        const t = (cols[0]||'').toLowerCase().trim(); if(i===0 && (t==='type' || t==='q_type')) continue;
-                        const text = (cols[1]||'').trim(); if(!text) continue;
-                        if(t==='mcq') {
-                            const ansRaw = (cols[6]||'').trim().toUpperCase(); const m = ['A','B','C','D'].includes(ansRaw) ? ansRaw : 'A';
-                            validItems.push({ q_type: 'mcq', q_text: text, options: [{text:cols[2],label:'A',is_correct:m==='A'},{text:cols[3],label:'B',is_correct:m==='B'},{text:cols[4],label:'C',is_correct:m==='C'},{text:cols[5],label:'D',is_correct:m==='D'}]});
-                        } else if(t==='tf') {
-                            const ans = (cols[6]||cols[2]||'').trim().toLowerCase(); const isT = ans==='true'||ans==='t';
-                            validItems.push({ q_type: 'tf', q_text: text, options: [{text:'True',label:'A',is_correct:isT},{text:'False',label:'B',is_correct:!isT}] });
-                        } else if(t==='blank' || t==='gap') {
-                            const ans = (cols[6]||cols[2]||'').trim(); if(!ans) return app.ui.toast(`Row ${i+1}: Fill in the Gap needs an answer key.`, true);
-                            validItems.push({ q_type: 'blank', q_text: text, options: [{text:ans,label:'A',is_correct:true}] });
+                        const cols = app.admin.parseCsvLine(lines[i]);
+                        const t = (cols[0]||'').toLowerCase().trim();
+                        if(i===0 && (t==='type' || t==='q_type')) continue;
+                        if(cols.length < 2) continue;
+                        const text = (cols[1]||'').trim();
+                        let error = null;
+                        let options = [];
+                        
+                        if(t === 'mcq') {
+                            const optA = (cols[2]||'').trim(); const optB = (cols[3]||'').trim(); const optC = (cols[4]||'').trim(); const optD = (cols[5]||'').trim();
+                            const ans = (cols[6]||'').trim().toUpperCase();
+                            if(!text) error = 'Missing question text';
+                            else if(!optA || !optB || !optC || !optD) error = 'MCQ requires 4 options (optA–optD)';
+                            else if(!['A','B','C','D'].includes(ans)) error = 'MCQ answer must be A, B, C, or D';
+                            else {
+                                options = [{text:optA,label:'A',is_correct:ans==='A'},{text:optB,label:'B',is_correct:ans==='B'},{text:optC,label:'C',is_correct:ans==='C'},{text:optD,label:'D',is_correct:ans==='D'}];
+                            }
+                        } else if(t === 'tf') {
+                            const ans = (cols[6]||'').trim().toLowerCase();
+                            if(!text) error = 'Missing question text';
+                            else if(ans !== 'true' && ans !== 'false') error = 'TF answer must be True or False';
+                            else {
+                                const isT = ans === 'true';
+                                options = [{text:'True',label:'A',is_correct:isT},{text:'False',label:'B',is_correct:!isT}];
+                            }
+                        } else if(t === 'blank' || t === 'gap') {
+                            const ans = (cols[6]||'').trim();
+                            if(!text) error = 'Missing question text';
+                            else if(!ans) error = 'Fill in the Gap requires an answer key in column 7';
+                            else {
+                                options = [{text:ans,label:'A',is_correct:true}];
+                            }
+                        } else {
+                            error = `Invalid question type: "${cols[0]}"`;
                         }
+                        parsedRows.push({ type: t, text, cols, error, options });
                     }
-                    if(validItems.length) { await app.api.rpc('admin_add_questions', {exam_id:state.adminCurrentCourse.id, items:validItems}); app.ui.modal(false); app.admin.loadQuestions(state.adminCurrentCourse.id); app.ui.toast(`${validItems.length} questions imported.`); }
+                    return parsedRows;
+                },
+                renderCsvPreview: (rows) => {
+                    const area = document.getElementById('csv-preview-area');
+                    const actions = document.getElementById('csv-import-actions');
+                    if(!rows.length) { area.innerHTML = '<p class="text-sm text-gray">No valid rows found.</p>'; actions.classList.add('hidden'); return; }
+                    const validCount = rows.filter(r => !r.error).length;
+                    area.innerHTML = `<div class="text-xs font-semibold mb-2">Preview: ${validCount} valid, ${rows.length - validCount} invalid rows</div>
+                        <div class="max-h-[220px] overflow-y-auto border rounded"><table class="text-xs"><thead><tr><th>Type</th><th>Question</th><th>Answer</th><th>Status</th></tr></thead><tbody>
+                        ${rows.map(r => `<tr class="${r.error?'bg-red-50 text-red-900':'bg-white'}"><td><strong>${r.type}</strong></td><td><div class="truncate max-w-[200px]">${app.ui.esc(r.text)}</div></td><td>${app.ui.esc(r.cols[6]\vert{}\vert{}'')}</td><td>${r.error ? `<span class="badge badge-red">${r.error}</span>` : `<span class="badge badge-green">Valid</span>`}</td></tr>`).join('')}
+                        </tbody></table></div>`;
+                    if(validCount > 0) actions.classList.remove('hidden'); else actions.classList.add('hidden');
+                    window._currentParsedCsvRows = rows;
+                },
+                previewCsvFile: (input) => {
+                    const file = input.files[0]; if(!file) return;
+                    const reader = new FileReader();
+                    reader.onload = (e) => { const rows = app.admin.parseCsvRows(e.target.result); app.admin.renderCsvPreview(rows); };
+                    reader.readAsText(file);
+                },
+                previewCsvText: (val) => { const rows = app.admin.parseCsvRows(val); app.admin.renderCsvPreview(rows); },
+                procCsvFile: async () => {
+                    const rows = window._currentParsedCsvRows || [];
+                    const validItems = rows.filter(r => !r.error).map(r => ({ q_type: r.type === 'gap' ? 'blank' : r.type, q_text: r.text, options: r.options }));
+                    if(!validItems.length) return app.ui.toast("No valid rows to import.", true);
+                    await app.api.rpc('admin_add_questions', { exam_id: state.adminCurrentCourse.id, items: validItems });
+                    app.ui.modal(false); app.admin.loadQuestions(state.adminCurrentCourse.id); app.ui.toast(`${validItems.length} questions imported successfully.`);
                 },
                 dlCsv: () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['type,question,optA,optB,optC,optD,answer\nmcq,"Who coined the phrase ""The medium is the message""?",Harold Lasswell,Marshall McLuhan,Denis McQuail,Wilbur Schramm,B\ntf,"Agenda-setting theory was introduced by McCombs and Shaw.",,,,True\nblank,"The first newspaper in Nigeria (1859) was Iwe ________.",,,,IROHIN'], {type:'text/csv'})); a.download = 'sample.csv'; a.click(); },
 
