@@ -60,7 +60,7 @@
         .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; } .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
         .px-4 { padding-left: 1rem; padding-right: 1rem; } .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
         .pt-2 { padding-top: 0.5rem; } .pt-3 { padding-top: 0.75rem; } .pt-4 { padding-top: 1rem; }
-        .pb-2 { padding-bottom: 0.5rem; } .pb-4 { padding-bottom: 1rem; }
+        .pb-2 { padding-bottom: 0.5rem; } .pb-4 { padding-bottom: 1rem; } .pb-24 { padding-bottom: 6rem; }
         .pl-2 { padding-left: 0.5rem; } .pl-4 { padding-left: 1rem; } .pr-1 { padding-right: 0.25rem; }
         .m-auto { margin: auto; } .mx-auto { margin-left: auto; margin-right: auto; }
         .mt-1 { margin-top: 0.25rem; } .mt-2 { margin-top: 0.5rem; } .mt-3 { margin-top: 0.75rem; } .mt-4 { margin-top: 1rem; } .mt-6 { margin-top: 1.5rem; } .mt-auto { margin-top: auto; }
@@ -190,16 +190,19 @@
         .header { background: #fff; padding: 1rem 2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 30; }
         .content-area { padding: 2rem; max-width: 1280px; margin: 0 auto; width: 100%; }
 
-        .nav-item { padding: 0.9rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; color: var(--text-light); cursor: pointer; border-left: 3px solid transparent; font-weight: 500; font-size: 0.95rem; transition: all 0.15s; }
+        .nav-item { padding: 0.9rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; color: var(--text-light); cursor: pointer; border-left: 3px solid transparent; font-weight: 500; font-size: 0.95rem; transition: all 0.15s; }
         .nav-item:hover { background: var(--paper); color: var(--text); }
         .nav-item.active { border-left-color: var(--g); color: var(--g); background: rgba(61,90,76,0.06); font-weight: 600; }
+        .nav-item-left { display: flex; align-items: center; gap: 0.75rem; }
 
         .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--lime); color: var(--g-dark); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1rem; flex-shrink: 0; }
 
         .exam-layout { display: flex; height: 100vh; background: var(--paper); }
-        .exam-main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
-        .exam-header { background: #fff; padding: 1rem 2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .exam-main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; position: relative; }
+        .exam-header { background: #fff; padding: 1rem 2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 20; }
         .exam-sidebar { width: 320px; background: #fff; border-left: 1px solid var(--border); padding: 1.5rem; display: flex; flex-direction: column; overflow-y: auto; }
+        .exam-footer { position: sticky; bottom: 0; background: var(--paper); padding: 1rem 1.5rem; border-top: 1px solid var(--border); margin-top: auto; display: flex; justify-content: space-between; align-items: center; z-index: 20; }
+        
         .q-matrix { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; margin-top: 1rem; }
         .q-btn { aspect-ratio: 1; border-radius: 8px; border: 1px solid var(--border); background: white; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .q-btn.answered { background: var(--lime); border-color: var(--lime); color: var(--g-dark); }
@@ -389,31 +392,6 @@
         </div>
     </div>
 
-    <!-- ADMIN LOGIN -->
-    <div id="view-admin-login" class="hidden bg-overlay bg-admin">
-        <div class="glass flex-col">
-            <div class="text-center mb-4">
-                <span class="badge badge-green mb-2 portal-title-display">CBT Examination Portal</span>
-                <h2 class="text-2xl font-bold" id="admin-auth-heading">Admin Portal Login</h2>
-                <p class="text-xs text-gray mt-1">Super Admins, Standard Admins & Exam Managers</p>
-            </div>
-            <p id="admin-login-err" class="text-error"></p>
-            <form id="form-admin-login" onsubmit="app.auth.adminLogin(event)">
-                <div class="input-group">
-                    <label>Email Address</label>
-                    <input type="email" id="admin-log-email" class="input" placeholder="admin@portal.com" required autocomplete="email">
-                </div>
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" id="admin-log-pass" class="input" placeholder="••••••••" required autocomplete="current-password">
-                    <svg class="eye-icon" onclick="app.ui.togglePass('admin-log-pass')" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                </div>
-                <button type="submit" class="btn btn-primary w-full mt-2" id="btn-admin-log"><span>Sign In as Administrator</span><div class="loader"></div></button>
-            </form>
-            <p class="text-center mt-2 text-sm"><a href="#" onclick="app.nav('view-home')" class="text-gray">← Back to home</a></p>
-        </div>
-    </div>
-
     <!-- CANDIDATE PORTAL -->
     <div id="view-cand-portal" class="hidden dashboard">
         <div class="sidebar">
@@ -427,10 +405,11 @@
                 </div>
             </div>
             <div class="flex-1 overflow-y-auto py-4 flex flex-col">
-                <div class="nav-item active" onclick="app.cand.switchTab('exams', this)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> My Exams</div>
-                <div class="nav-item" onclick="app.cand.switchTab('results', this)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Results & Transcript</div>
-                <div class="nav-item" onclick="app.cand.switchTab('courses', this)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg> Course Registration</div>
-                <div class="nav-item" onclick="app.cand.switchTab('reviews', this)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Request Review</div>
+                <div class="nav-item active" onclick="app.cand.switchTab('exams', this)"><div class="nav-item-left"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> My Exams</div></div>
+                <div class="nav-item" onclick="app.cand.switchTab('schedule', this)"><div class="nav-item-left"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> My Schedule</div></div>
+                <div class="nav-item" onclick="app.cand.switchTab('results', this)"><div class="nav-item-left"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Results & Transcript</div> <span class="badge badge-red hidden" id="cand-badge-results">0</span></div>
+                <div class="nav-item" onclick="app.cand.switchTab('courses', this)"><div class="nav-item-left"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg> Course Registration</div></div>
+                <div class="nav-item" onclick="app.cand.switchTab('reviews', this)"><div class="nav-item-left"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Request Review</div></div>
             </div>
             <div class="p-4 border-t border-slate-200">
                 <button onclick="app.auth.logout()" class="btn btn-secondary w-full text-red justify-center">Logout</button>
@@ -454,6 +433,7 @@
             <div id="cand-mobile-overlay" class="mobile-dropdown-overlay" onclick="app.ui.toggleMobileNav('cand', true)"></div>
             <div id="cand-mobile-nav" class="mobile-nav-panel">
                 <button class="mobile-nav-pill active" onclick="app.cand.switchTab('exams'); app.ui.toggleMobileNav('cand', true);">My Exams</button>
+                <button class="mobile-nav-pill" onclick="app.cand.switchTab('schedule'); app.ui.toggleMobileNav('cand', true);">My Schedule</button>
                 <button class="mobile-nav-pill" onclick="app.cand.switchTab('results'); app.ui.toggleMobileNav('cand', true);">Results & Transcript</button>
                 <button class="mobile-nav-pill" onclick="app.cand.switchTab('courses'); app.ui.toggleMobileNav('cand', true);">Course Registration</button>
                 <button class="mobile-nav-pill" onclick="app.cand.switchTab('reviews'); app.ui.toggleMobileNav('cand', true);">Request Review</button>
@@ -461,6 +441,13 @@
             </div>
 
             <div class="content-area">
+                <div id="cand-welcome-banner" class="mb-6 p-4 rounded-xl bg-g text-white shadow-sm flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold">Welcome, <span id="cand-welcome-name"></span> 👋</h2>
+                        <p class="text-sm opacity-90">Ready for your assessments?</p>
+                    </div>
+                </div>
+
                 <!-- EXAMS -->
                 <div id="cand-tab-exams" class="cand-tab">
                     <div id="cand-hall-status" class="mb-6 p-4 rounded-xl bg-blue-50 border border-blue-200 hidden"></div>
@@ -473,6 +460,19 @@
                         </div>
                     </div>
                     <div id="cand-exams-list" class="flex flex-col gap-8"></div>
+                </div>
+
+                <!-- SCHEDULE -->
+                <div id="cand-tab-schedule" class="cand-tab hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold text-lg">My Exam Schedule</h3>
+                    </div>
+                    <div class="card p-0 table-container">
+                        <table>
+                            <thead><tr><th>Course Code</th><th>Exam Title</th><th>Batch Allocation</th></tr></thead>
+                            <tbody id="cand-schedule-list"></tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <!-- RESULTS -->
@@ -575,7 +575,7 @@
                     <button class="btn btn-danger hide-mobile" onclick="app.exam.confirmSubmit()">Submit Exam</button>
                 </div>
             </div>
-            <div class="flex-1 p-6 flex flex-col max-w-4xl mx-auto w-full">
+            <div class="flex-1 p-6 pb-24 flex flex-col max-w-4xl mx-auto w-full">
                 <div class="flex justify-between items-center mb-6">
                     <span class="font-bold text-gray" id="ex-q-num"></span>
                     <button class="btn btn-secondary text-sm" id="btn-ex-flag" onclick="app.exam.toggleFlag()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="ex-flag-icon"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg> <span id="ex-flag-text">Flag for review</span></button>
@@ -584,11 +584,12 @@
                     <div class="text-lg font-medium mb-8 whitespace-pre-wrap" id="ex-q-text"></div>
                     <div id="ex-options" class="flex flex-col flex-1"></div>
                 </div>
-                <div class="flex justify-between items-center">
-                    <button class="btn btn-secondary" onclick="app.exam.prev()" id="btn-ex-prev">← Previous</button>
-                    <button class="btn btn-secondary hide-mobile" onclick="app.exam.nextFlagged()">Next Flagged</button>
-                    <button class="btn btn-primary" onclick="app.exam.next()" id="btn-ex-next">Next →</button>
-                </div>
+            </div>
+            
+            <div class="exam-footer">
+                <button class="btn btn-secondary" onclick="app.exam.prev()" id="btn-ex-prev">← Previous</button>
+                <button class="btn btn-secondary hide-mobile" onclick="app.exam.nextFlagged()">Next Flagged</button>
+                <button class="btn btn-primary" onclick="app.exam.next()" id="btn-ex-next">Next →</button>
             </div>
         </div>
         <div class="exam-sidebar">
@@ -613,13 +614,14 @@
                 </div>
             </div>
             <div class="flex-1 overflow-y-auto py-4 flex flex-col">
-                <div class="nav-item active" onclick="app.admin.switchTab('overview', this)">Overview</div>
-                <div class="nav-item" onclick="app.admin.switchTab('courses', this)">Courses & Exams</div>
-                <div class="nav-item" onclick="app.admin.switchTab('enrollments', this)">Enrollments</div>
-                <div class="nav-item" onclick="app.admin.switchTab('candidates', this)">Candidates</div>
-                <div class="nav-item flex justify-between" onclick="app.admin.switchTab('results', this)"><span>Results</span> <span id="admin-nav-badge" class="badge badge-red hidden">0</span></div>
-                <div class="nav-item" onclick="app.admin.switchTab('admins', this)">Administrators</div>
-                <div class="nav-item" onclick="app.admin.switchTab('settings', this)">Settings & Tags</div>
+                <div class="nav-item active" onclick="app.admin.switchTab('overview', this)"><div class="nav-item-left">Overview</div></div>
+                <div class="nav-item" onclick="app.admin.switchTab('courses', this)"><div class="nav-item-left">Courses & Exams</div></div>
+                <div class="nav-item" onclick="app.admin.switchTab('enrollments', this)"><div class="nav-item-left">Enrollments</div></div>
+                <div class="nav-item" onclick="app.admin.switchTab('candidates', this)"><div class="nav-item-left">Candidates</div></div>
+                <div class="nav-item" onclick="app.admin.switchTab('schedule', this)"><div class="nav-item-left">Schedule Candidates</div></div>
+                <div class="nav-item" onclick="app.admin.switchTab('results', this)"><div class="nav-item-left">Results</div> <span id="admin-badge-results" class="badge badge-red hidden">0</span></div>
+                <div class="nav-item" onclick="app.admin.switchTab('admins', this)"><div class="nav-item-left">Administrators</div></div>
+                <div class="nav-item" onclick="app.admin.switchTab('settings', this)"><div class="nav-item-left">Settings & Tags</div></div>
             </div>
             <div class="p-4 border-t border-slate-200"><button onclick="app.auth.logout()" class="btn btn-secondary w-full text-red justify-center">Logout</button></div>
         </div>
@@ -644,6 +646,7 @@
                 <button class="mobile-nav-pill" onclick="app.admin.switchTab('courses'); app.ui.toggleMobileNav('admin', true);">Courses & Exams</button>
                 <button class="mobile-nav-pill" onclick="app.admin.switchTab('enrollments'); app.ui.toggleMobileNav('admin', true);">Enrollments</button>
                 <button class="mobile-nav-pill" onclick="app.admin.switchTab('candidates'); app.ui.toggleMobileNav('admin', true);">Candidates</button>
+                <button class="mobile-nav-pill" onclick="app.admin.switchTab('schedule'); app.ui.toggleMobileNav('admin', true);">Schedule</button>
                 <button class="mobile-nav-pill" onclick="app.admin.switchTab('results'); app.ui.toggleMobileNav('admin', true);">Results</button>
                 <button class="mobile-nav-pill" onclick="app.admin.switchTab('admins'); app.ui.toggleMobileNav('admin', true);">Administrators</button>
                 <button class="mobile-nav-pill" onclick="app.admin.switchTab('settings'); app.ui.toggleMobileNav('admin', true);">Settings</button>
@@ -651,8 +654,16 @@
             </div>
 
             <div class="content-area">
+                
                 <!-- Overview -->
                 <div id="adm-tab-overview" class="adm-tab">
+                    <div id="admin-welcome-banner" class="mb-6 p-4 rounded-xl bg-slate-800 text-white shadow-sm flex items-center justify-between" style="background: linear-gradient(135deg, rgba(30, 41, 59, 1), rgba(43, 64, 54, 1));">
+                        <div>
+                            <h2 class="text-xl font-bold">Welcome, <span id="admin-welcome-name"></span></h2>
+                            <p class="text-sm opacity-90">System overview and control panel</p>
+                        </div>
+                    </div>
+                
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" id="adm-ov-stats"></div>
                     <div class="card mb-8">
                         <h3 class="font-bold mb-4">CBT Examination Hall Capacity Status</h3>
@@ -714,7 +725,6 @@
                                     <h4 class="font-bold mb-4">Batch Slots</h4>
                                     <form onsubmit="app.admin.addSlot(event)" class="mb-4 pb-4 border-b">
                                         <input type="text" id="cd-slot-lbl" placeholder="Label" class="input mb-2" required>
-                                        <div class="grid grid-cols-2 gap-2 mb-2"><input type="datetime-local" id="cd-slot-start" class="input text-xs" required><input type="datetime-local" id="cd-slot-end" class="input text-xs" required></div>
                                         <button class="btn btn-secondary w-full text-sm">Add Slot</button>
                                     </form>
                                     <div id="cd-slots-list" class="flex flex-col gap-2 text-sm"></div>
@@ -766,6 +776,37 @@
                     </div>
                     <div class="card p-0 table-container">
                         <table><thead><tr><th>Name</th><th>Username</th><th>Level & Dept</th><th>GPA</th><th>Status</th><th>Reg Units</th><th>Actions</th></tr></thead><tbody id="adm-cand-list"></tbody></table>
+                    </div>
+                </div>
+
+                <!-- Schedule Candidates -->
+                <div id="adm-tab-schedule" class="adm-tab hidden">
+                    <h3 class="font-bold text-lg mb-6">Bulk Schedule Candidates</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-1 flex flex-col gap-4">
+                            <div class="card">
+                                <h4 class="font-bold mb-4">1. Select Course & Batch</h4>
+                                <div class="input-group"><label>Exam / Course</label><select id="adm-sch-exam" class="select" onchange="app.admin.loadScheduleSlots()"></select></div>
+                                <div class="input-group"><label>Batch Slot</label><select id="adm-sch-slot" class="select" onchange="app.admin.loadScheduleCandidates()"></select></div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-2">
+                            <div class="card p-0">
+                                <div class="p-4 border-b flex justify-between items-center bg-slate-50">
+                                    <h4 class="font-bold">2. Assign Candidates</h4>
+                                    <button class="btn btn-primary text-sm" onclick="app.admin.saveBulkSchedule()">Save Assignments</button>
+                                </div>
+                                <div class="p-4 border-b">
+                                    <label class="flex items-center gap-2 cursor-pointer font-bold"><input type="checkbox" id="adm-sch-select-all" onchange="app.admin.toggleScheduleSelectAll(this.checked)"><span>Select / Deselect All</span></label>
+                                </div>
+                                <div class="table-container max-h-[400px] overflow-y-auto">
+                                    <table>
+                                        <thead><tr><th>Assign</th><th>Candidate Name</th><th>Level</th><th>Current Schedule</th></tr></thead>
+                                        <tbody id="adm-sch-cand-list"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -835,7 +876,6 @@
     <!-- Modals Container -->
     <div id="modal-container" class="hidden"></div>
     <div id="toast" class="toast"></div>
-
     <script>
         const SUPABASE_URL = 'https://xqiobvatqunvvufynjts.supabase.co';
         const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_gRBvi3jzR1Qr60_qZ0c6iw_g5zxrOow';
@@ -969,23 +1009,26 @@
                     }
                     state.user = session.user; state.profile = prof;
 
+                    const words = (prof.full_name || '').trim().split(/\s+/);
+                    const greetingName = words.length > 1 ? `${words[0]}` : (words[0] || ''); 
+
                     if (['super_admin', 'admin', 'exam_manager'].includes(String(prof.role || '').toLowerCase())) {
-                        const words = (prof.full_name || '').trim().split(/\s+/);
-                        const greetingName = words.length > 1 ? `${words[0]} ${words[1]}` : (words[0] || '');
-                        document.querySelectorAll('.admin-name-display').forEach(el => el.textContent = greetingName);
+                        document.querySelectorAll('.admin-name-display').forEach(el => el.textContent = words.length > 1 ? `${words[0]} ${words[1]}` : greetingName);
                         document.querySelectorAll('.admin-role-badge-sidebar').forEach(el => el.textContent = prof.role);
                         const topBadge = document.getElementById('admin-top-role-badge');
                         if (topBadge) { topBadge.textContent = prof.role === 'super_admin' ? 'Super Admin' : 'Admin'; topBadge.className = 'badge ' + (prof.role==='super_admin' ? 'badge-green' : 'badge-amber'); }
+                        
+                        document.getElementById('admin-welcome-name').textContent = greetingName;
                         app.nav('view-admin-portal'); app.admin.init();
                     } else if (['candidate', 'student'].includes(String(prof.role || '').toLowerCase())) {
                         const lvl = (prof.level || 100) + 'L';
-                        const words = (prof.full_name || '').trim().split(/\s+/);
-                        const greetingName = words.length > 1 ? `${words[0]} ${words[1]}` : (words[0] || '');
-                        document.querySelectorAll('.cand-name-display').forEach(el => el.textContent = greetingName);
+                        document.querySelectorAll('.cand-name-display').forEach(el => el.textContent = words.length > 1 ? `${words[0]} ${words[1]}` : greetingName);
                         document.querySelectorAll('.cand-user-display').forEach(el => el.textContent = '@' + prof.username);
                         document.querySelectorAll('.cand-level-badge').forEach(el => el.textContent = lvl);
                         document.querySelectorAll('.cand-level-dept-display').forEach(el => el.textContent = `${lvl} • ${prof.department||''}`);
                         document.querySelectorAll('.cand-avatar-display').forEach(el => el.textContent = (prof.full_name || '??').substring(0,2).toUpperCase());
+                        
+                        document.getElementById('cand-welcome-name').textContent = greetingName;
                         app.nav('view-cand-portal'); await app.cand.init();
                     } else {
                         console.error('Unrecognized role:', prof.role);
@@ -1086,14 +1129,25 @@
 
             cand: {
                 selectedCourseIds: new Set(),
-                init: async () => { app.cand.switchTab('exams', document.querySelector('#view-cand-portal .nav-item')); },
+                init: async () => { 
+                    app.cand.switchTab('exams', document.querySelector('#view-cand-portal .nav-item')); 
+                    app.cand.loadBadges();
+                },
                 switchTab: (tab, el) => {
                     document.querySelectorAll('#view-cand-portal .nav-item').forEach(n => n.classList.remove('active')); if(el) el.classList.add('active');
                     document.querySelectorAll('.cand-tab').forEach(t => t.classList.add('hidden')); document.getElementById(`cand-tab-${tab}`).classList.remove('hidden');
-                    const tMap = { 'exams': 'My Exams', 'results': 'Results & Transcript', 'courses': 'Course Registration', 'reviews': 'Request Review' };
+                    const tMap = { 'exams': 'My Exams', 'schedule': 'My Schedule', 'results': 'Results & Transcript', 'courses': 'Course Registration', 'reviews': 'Request Review' };
                     document.getElementById('cand-header-title').textContent = tMap[tab];
-                    if(tab==='exams') app.cand.loadExams(); else if(tab==='results') app.cand.loadResults(); else if(tab==='courses') app.cand.loadCourses(); else if(tab==='reviews') app.cand.loadReviews();
+                    if(tab==='exams') app.cand.loadExams(); else if(tab==='schedule') app.cand.loadSchedule(); else if(tab==='results') app.cand.loadResults(); else if(tab==='courses') app.cand.loadCourses(); else if(tab==='reviews') app.cand.loadReviews();
                     if(window.innerWidth <= 768) app.ui.toggleMobileNav('cand', true);
+                },
+                loadBadges: async () => {
+                    try {
+                        const b = await app.api.rpc('get_cand_badges');
+                        const resBadge = document.getElementById('cand-badge-results');
+                        if (b && b.results > 0) { resBadge.textContent = b.results; resBadge.classList.remove('hidden'); }
+                        else { resBadge.classList.add('hidden'); }
+                    } catch(e) {}
                 },
                 setExamSemesterFilter: (sem, btn) => { state.candExamSemFilter = sem; if (btn) { btn.parentElement.querySelectorAll('.sem-tab').forEach(b => b.classList.remove('active')); btn.classList.add('active'); } app.cand.loadExams(); },
                 loadExams: async () => {
@@ -1119,7 +1173,7 @@
                                                     const attUsed = ex.attempts_used || 0; const attAllowed = ex.attempts_allowed || 1;
                                                     const exhausted = attUsed >= attAllowed;
                                                     return `<div class="card flex-col"><div class="flex justify-between mb-2"><div><span class="badge badge-gray">${app.ui.esc(ex.course_code)}</span> <span class="badge badge-green">${ex.units}u</span></div><span class="text-xs font-semibold">${ex.total_questions} Qs</span></div><h3 class="font-bold text-lg mb-1">${app.ui.esc(ex.title)}</h3><p class="text-xs text-gray mb-4">${ex.duration_seconds/60} mins • Attempts: ${attUsed}/${attAllowed}</p>
-                                                            ${isSub ? `<button class="btn btn-secondary w-full mt-auto" onclick="app.cand.switchTab('results', document.querySelectorAll('#view-cand-portal .nav-item')[1])">View Result</button>` : `<button class="btn ${exhausted?'btn-secondary':'btn-primary'} w-full mt-auto" ${exhausted?'disabled':''} onclick="app.exam.prepare('${app.ui.esc(ex.id)}', '${app.ui.esc(ex.course_code)}', ${ex.duration_seconds/60}, '${app.ui.esc(ex.semester)}')">${exhausted?'Attempts Exhausted':'Start Exam'}</button>`}
+                                                            ${isSub ? `<button class="btn btn-secondary w-full mt-auto" onclick="app.cand.switchTab('results', document.querySelectorAll('#view-cand-portal .nav-item')[2])">View Result</button>` : `<button class="btn ${exhausted?'btn-secondary':'btn-primary'} w-full mt-auto" ${exhausted?'disabled':''} onclick="app.exam.prepare('${app.ui.esc(ex.id)}', '${app.ui.esc(ex.course_code)}', ${ex.duration_seconds/60}, '${app.ui.esc(ex.semester)}')">${exhausted?'Attempts Exhausted':'Start Exam'}</button>`}
                                                         </div>`;
                                                 }).join('')}
                                             </div></div>`;
@@ -1131,10 +1185,19 @@
                         list.innerHTML = html || '<div class="card text-sm text-gray">No exams found for this filter.</div>';
                     } catch(e) { app.ui.toast(e.message || 'Could not load exams.', true); }
                 },
+                loadSchedule: async () => {
+                    try {
+                        const s = await app.api.rpc('my_schedules');
+                        const slotsMap = {};
+                        // we need slot labels. For brevity, assuming slots are stored in a common structure or we just say "Allocated Slot" if details aren't joined.
+                        document.getElementById('cand-schedule-list').innerHTML = s.map(x => `<tr><td><b>${app.ui.esc(x.course_code)}</b></td><td>${app.ui.esc(x.exam_title)}</td><td><span class="badge badge-blue">Slot Allocated (Check Admin Notice)</span></td></tr>`).join('') || '<tr><td colspan="3" class="text-center p-4">No schedule assignments yet.</td></tr>';
+                    } catch(e) { app.ui.toast(e.message || 'Could not load schedules.', true); }
+                },
                 setResultSemesterFilter: (sem, btn) => { state.candResultSemFilter = sem; if (btn) { btn.parentElement.querySelectorAll('.sem-tab').forEach(b => b.classList.remove('active')); btn.classList.add('active'); } app.cand.loadResults(); },
                 loadResults: async () => {
                     try {
                         const data = (await app.api.rpc('my_results')) || [];
+                        app.cand.loadBadges(); // Clear badge logic will happen when they open specific review
                         const container = document.getElementById('cand-transcript-container');
                         const revSel = document.getElementById('cand-rev-exam');
                         if (revSel) revSel.innerHTML = '<option value="">Select an exam...</option>' + data.map(r => `<option value="${app.ui.esc(r.exam_id)}">${app.ui.esc(r.course_code)}</option>`).join('');
@@ -1167,6 +1230,7 @@
                 },
                 reviewAttempt: async (sid) => {
                     try {
+                        await app.api.rpc('mark_cand_read', { p_session_id: sid }); app.cand.loadBadges();
                         const data = await app.api.rpc('review_attempt', { p_session_id: sid });
                         if(!data.length) return app.ui.toast("No review data found. Note: Review data is purged upon level promotion.");
                         let html = `<div class="modal-header"><h3 class="font-bold">Review Attempt</h3><button class="modal-close" onclick="app.ui.modal(false)">&times;</button></div><div class="modal-body flex-col gap-4">`;
@@ -1330,17 +1394,20 @@
                     try {
                         const res = await app.api.rpc('submit_and_grade_exam', { p_attempt_id: state.exam.session.id, p_answers: state.exam.answers });
                         const pct = res.total?Math.round((res.score/res.total)*100):0; const g = app.utils.computeGrade(pct);
-                        app.ui.modal(`<div class="modal-body text-center"><h2>${res.score}/${res.total} (${pct}%)</h2><p class="font-bold text-g">Grade: ${g.grade} (${g.gp}GP - ${g.remark})</p><button class="btn btn-primary mt-4" onclick="app.ui.modal(false);app.nav('view-cand-portal');app.cand.switchTab('results',document.querySelectorAll('#view-cand-portal .nav-item')[1])">Continue</button></div>`);
+                        app.ui.modal(`<div class="modal-body text-center"><h2>${res.score}/${res.total} (${pct}%)</h2><p class="font-bold text-g">Grade: ${g.grade} (${g.gp}GP - ${g.remark})</p><button class="btn btn-primary mt-4" onclick="app.ui.modal(false);app.nav('view-cand-portal');app.cand.switchTab('results',document.querySelectorAll('#view-cand-portal .nav-item')[2])">Continue</button></div>`);
                     } catch(e) { app.ui.modal(false); app.ui.toast("Error submitting.",true); app.nav('view-cand-portal'); }
                 }
             },
 
             admin: {
-                init: async () => { app.admin.switchTab('overview', document.querySelector('#view-admin-portal .nav-item')); },
+                init: async () => { 
+                    app.admin.switchTab('overview', document.querySelector('#view-admin-portal .nav-item')); 
+                    app.admin.loadBadges();
+                },
                 switchTab: async (tab, el) => {
                     document.querySelectorAll('#view-admin-portal .nav-item').forEach(n => n.classList.remove('active')); if(el) el.classList.add('active');
                     document.querySelectorAll('.adm-tab').forEach(t => t.classList.add('hidden')); document.getElementById(`adm-tab-${tab}`).classList.remove('hidden');
-                    if(tab==='overview') app.admin.loadOverview(); else if(tab==='courses') app.admin.loadCourses(); else if(tab==='enrollments') app.admin.loadEnrollments(); else if(tab==='candidates') app.admin.loadUsers('candidate'); else if(tab==='results') app.admin.resTab('res', document.querySelector('#adm-tab-results button')); else if(tab==='admins') app.admin.loadUsers('admin'); else if(tab==='settings') {
+                    if(tab==='overview') app.admin.loadOverview(); else if(tab==='courses') app.admin.loadCourses(); else if(tab==='enrollments') app.admin.loadEnrollments(); else if(tab==='candidates') app.admin.loadUsers('candidate'); else if (tab==='schedule') app.admin.initScheduleTab(); else if(tab==='results') app.admin.resTab('res', document.querySelector('#adm-tab-results button')); else if(tab==='admins') app.admin.loadUsers('admin'); else if(tab==='settings') {
                         try {
                             state.tags = await app.api.rpc('list_tags');
                             const s = state.settings;
@@ -1348,6 +1415,14 @@
                         } catch(e) { app.ui.toast(e.message || 'Could not load settings.', true); }
                     }
                     if(window.innerWidth <= 768) app.ui.toggleMobileNav('admin', true);
+                },
+                loadBadges: async () => {
+                    try {
+                        const b = await app.api.rpc('get_admin_badges');
+                        const resBadge = document.getElementById('admin-badge-results');
+                        if (b && b.results > 0) { resBadge.textContent = b.results; resBadge.classList.remove('hidden'); }
+                        else { resBadge.classList.add('hidden'); }
+                    } catch (e) {}
                 },
                 loadOverview: async () => {
                     try {
@@ -1560,6 +1635,56 @@
                 resetPass: (id) => { app.ui.modal(`<div class="modal-header"><h3 class="font-bold">Reset Password</h3><button class="modal-close" onclick="app.ui.modal(false)">&times;</button></div><div class="modal-body"><div class="input-group"><label>New password (min 6 characters)</label><input type="text" id="rp-pass" class="input" value=""></div><button class="btn btn-primary w-full" onclick="app.admin.doReset('${app.ui.esc(id)}')">Save New Password</button></div>`); },
                 doReset: async (id) => { const p = document.getElementById('rp-pass').value.trim(); try { await app.api.rpc('admin_reset_password', { id, password: p }); app.ui.modal(false); app.ui.toast("Password reset. Give the new password to the candidate."); } catch(err) { app.ui.toast(err.message, true); } },
                 delUser: async (id) => { app.ui.confirmModal("Delete User", "Are you sure?", async () => { try { await app.api.rpc('admin_delete_user', {id}); app.admin.loadUsers('candidate'); app.admin.loadUsers('admin'); } catch(e) { app.ui.toast(e.message || 'Could not delete user.', true); } }); },
+                
+                initScheduleTab: async () => {
+                    try {
+                        const exams = await app.api.rpc('admin_exams');
+                        const ddl = document.getElementById('adm-sch-exam');
+                        ddl.innerHTML = '<option value="">-- Select Exam --</option>' + exams.map(e => `<option value="${app.ui.esc(e.id)}">${app.ui.esc(e.code)} - ${app.ui.esc(e.title)}</option>`).join('');
+                        document.getElementById('adm-sch-slot').innerHTML = '<option value="">-- Select Slot --</option>';
+                        document.getElementById('adm-sch-cand-list').innerHTML = '<tr><td colspan="4" class="text-center p-4">Select an exam and slot to load candidates.</td></tr>';
+                    } catch(e) {}
+                },
+                loadScheduleSlots: async () => {
+                    const eid = document.getElementById('adm-sch-exam').value;
+                    if(!eid) return;
+                    try {
+                        const slots = await app.api.rpc('admin_get_slots', {exam_id: eid});
+                        const slotSel = document.getElementById('adm-sch-slot');
+                        slotSel.innerHTML = '<option value="">-- Select Batch Slot --</option>' + slots.map(s => `<option value="${app.ui.esc(s.id)}">${app.ui.esc(s.label)}</option>`).join('');
+                    } catch(e){}
+                },
+                loadScheduleCandidates: async () => {
+                    const eid = document.getElementById('adm-sch-exam').value;
+                    const sid = document.getElementById('adm-sch-slot').value;
+                    if(!eid || !sid) return;
+                    try {
+                        const allEnrolls = await app.api.rpc('admin_enrollments');
+                        const courseEnrolls = allEnrolls.filter(x => x.course_id === eid);
+                        const currentSch = await app.api.rpc('admin_get_schedules', { p_exam_id: eid });
+                        
+                        document.getElementById('adm-sch-cand-list').innerHTML = courseEnrolls.map(c => {
+                            const sch = currentSch.find(s => s.candidate_id === c.user_id);
+                            const isThisSlot = sch && sch.slot_id === sid;
+                            return `<tr><td><input type="checkbox" class="adm-sch-chk" value="${app.ui.esc(c.user_id)}" ${isThisSlot?'checked':''}></td><td><b>${app.ui.esc(c.full_name)}</b></td><td>${c.cand_level}L</td><td>${sch ? (isThisSlot?'<span class="badge badge-green">This Slot</span>':'<span class="badge badge-gray">Other Slot</span>') : '<span class="badge badge-red">Unscheduled</span>'}</td></tr>`;
+                        }).join('') || '<tr><td colspan="4" class="text-center p-4">No candidates enrolled in this course.</td></tr>';
+                    } catch(e){}
+                },
+                toggleScheduleSelectAll: (checked) => {
+                    document.querySelectorAll('.adm-sch-chk').forEach(cb => cb.checked = checked);
+                },
+                saveBulkSchedule: async () => {
+                    const eid = document.getElementById('adm-sch-exam').value;
+                    const sid = document.getElementById('adm-sch-slot').value;
+                    if(!eid || !sid) return app.ui.toast("Select an exam and slot.");
+                    const cids = Array.from(document.querySelectorAll('.adm-sch-chk:checked')).map(cb => cb.value);
+                    app.ui.btnLoad(document.activeElement, true);
+                    try {
+                        await app.api.rpc('admin_bulk_assign_schedule', { p_exam_id: eid, p_slot_id: sid, p_candidate_ids: cids });
+                        app.ui.toast("Assignments saved.");
+                        app.admin.loadScheduleCandidates();
+                    } catch(e) { app.ui.toast(e.message, true); }
+                },
 
                 resTab: (sec, btn) => {
                     if(btn){ btn.parentElement.querySelectorAll('button').forEach(b=>{b.style.borderColor='transparent';b.classList.replace('text-g','text-gray');}); btn.style.borderColor='var(--g)'; btn.classList.replace('text-gray','text-g'); }
@@ -1581,6 +1706,7 @@
 
                 viewAttempt: async (sid) => {
                     try {
+                        await app.api.rpc('mark_admin_read', { p_session_id: sid }); app.admin.loadBadges();
                         state.attemptMarkData = sid;
                         const data = await app.api.rpc('review_attempt', { p_session_id: sid });
                         if(!data.length) return app.ui.toast("No review data found. It may have been purged on promotion.");
@@ -1646,8 +1772,8 @@
                     } catch(e) { app.ui.toast(e.message, true); }
                 },
                 renderTags: () => { document.getElementById('adm-tags-list').innerHTML = state.tags.map(t=>`<div class="flex justify-between border p-2"><span>${app.ui.esc(t)}</span><button class="text-red font-bold" data-tag="${app.ui.esc(t)}" onclick="app.admin.delTag(this.dataset.tag)">X</button></div>`).join(''); },
-                delTag: async (tag) => { try { await app.api.rpc('admin_del_tag',{tag}); app.admin.switchTab('settings', document.querySelectorAll('#view-admin-portal .nav-item')[6]); } catch(e) { app.ui.toast(e.message || 'Could not delete tag.', true); } },
-                addTag: async () => { const v=document.getElementById('adm-new-tag').value.trim(); if(v){ try { await app.api.rpc('admin_add_tag',{tag:v}); document.getElementById('adm-new-tag').value=''; app.admin.switchTab('settings', document.querySelectorAll('#view-admin-portal .nav-item')[6]); } catch(e) { app.ui.toast(e.message || 'Could not add tag.', true); } } },
+                delTag: async (tag) => { try { await app.api.rpc('admin_del_tag',{tag}); app.admin.switchTab('settings', document.querySelectorAll('#view-admin-portal .nav-item')[7]); } catch(e) { app.ui.toast(e.message || 'Could not delete tag.', true); } },
+                addTag: async () => { const v=document.getElementById('adm-new-tag').value.trim(); if(v){ try { await app.api.rpc('admin_add_tag',{tag:v}); document.getElementById('adm-new-tag').value=''; app.admin.switchTab('settings', document.querySelectorAll('#view-admin-portal .nav-item')[7]); } catch(e) { app.ui.toast(e.message || 'Could not add tag.', true); } } },
 
                 modals: {
                     openCourse: () => app.ui.modal(`<div class="modal-header"><h3 class="font-bold">Add Course</h3><button class="modal-close" onclick="app.ui.modal(false)">&times;</button></div><div class="modal-body"><form onsubmit="app.admin.createCourse(event)"><div class="input-group"><label>Code</label><input id="ac-code" class="input" required></div><div class="input-group"><label>Title</label><input id="ac-title" class="input" required></div><div class="input-group"><label>Units</label><input id="ac-units" type="number" class="input" required value="3"></div><div class="input-group"><label>Level</label><select id="ac-level" class="select"><option value="100">100</option><option value="200">200</option><option value="300">300</option><option value="400">400</option></select></div><div class="input-group"><label>Semester</label><select id="ac-sem" class="select"><option value="First Semester">First</option><option value="Second Semester">Second</option></select></div><div class="input-group"><label>Exam Tag</label><select id="ac-tag" class="select">${state.tags.map(t=>`<option value="${app.ui.esc(t)}">${app.ui.esc(t)}</option>`).join('')}<option value="Other">Other</option></select></div><button class="btn btn-primary w-full">Save</button></form></div>`),
