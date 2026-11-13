@@ -277,6 +277,78 @@
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
     </style>
+
+<style id="signup-polish">
+/* Water-fill steps */
+.signup-steps-track{position:relative;display:flex;align-items:center;gap:0;margin:24px 0 28px 0;}
+.signup-steps-line{position:absolute;left:16px;right:16px;top:50%;height:3px;transform:translateY(-50%);background:#e5e7eb;border-radius:999px;overflow:hidden;}
+#signup-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#0f5c3a,#1a8a55,#2db573);border-radius:999px;transition:width 0.7s cubic-bezier(0.4,0,0.2,1);position:relative;}
+#signup-progress-fill::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.5),transparent);animation:shine 1.2s infinite;}
+@keyframes shine{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
+.signup-step-dot{transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);position:relative;z-index:2;background:#fff !important;}
+.signup-step-dot.active{transform:scale(1.15);box-shadow:0 0 0 4px rgba(26,138,85,0.15);}
+.signup-stage{animation:stageIn 0.45s ease both;}
+@keyframes stageIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+/* Uniform pills in course list - kill multicolor */
+#signup-courses-list .badge,
+#signup-courses-list [class*="badge"],
+#signup-courses-list span{border-radius:999px !important;}
+#signup-courses-list .badge-blue,
+#signup-courses-list .badge-green,
+#signup-courses-list .badge-red,
+#signup-courses-list .badge-gray,
+#signup-courses-list .badge-yellow{background:#f1f5f9 !important;color:#334155 !important;border:1px solid #e2e8f0 !important;font-weight:600 !important;}
+/* Any pill inside a course row - force uniform */
+#signup-courses-list > div span{ background:#f1f5f9 !important; color:#334155 !important; border:1px solid #e2e8f0 !important; }
+#signup-courses-list > div > div span{ background:#f1f5f9 !important; color:#334155 !important; border:1px solid #e2e8f0 !important; }
+</style>
+
+
+<style id="signup-polish2">
+/* THICK GREEN WATER */
+.signup-steps-track{position:relative;display:flex;align-items:center;gap:0;margin:24px 0 28px 0;}
+.signup-steps-line{position:absolute;left:20px;right:20px;top:50%;height:6px !important;transform:translateY(-50%);background:#e5e7eb !important;border-radius:999px;overflow:visible !important;}
+#signup-progress-fill{height:6px !important;width:0%;background:#0f5132 !important;background:linear-gradient(90deg,#0f5132,#166534) !important;border-radius:999px;transition:width 0.7s cubic-bezier(0.4,0,0.2,1);position:relative;}
+#signup-progress-fill::after{display:none !important;}
+.signup-step-dot{width:36px !important;height:36px !important;min-width:36px;min-height:36px;border-radius:999px !important;position:relative;z-index:2;display:flex !important;align-items:center !important;justify-content:center !important;font-weight:800 !important;font-size:15px !important;color:#000 !important;background:#fff !important;border:2.5px solid #0f5132 !important;transition:all 0.3s ease !important;}
+.signup-step-dot.active{background:#0f5132 !important;color:#fff !important;border-color:#0f5132 !important;}
+.signup-step-dot.done{background:#0f5132 !important;color:#fff !important;border-color:#0f5132 !important;}
+.signup-step-dot.hit{animation:bubbleHit 0.55s cubic-bezier(0.34,1.56,0.64,1) !important;}
+@keyframes bubbleHit{0%{transform:scale(1);}30%{transform:scale(1.35);}55%{transform:scale(0.92);}75%{transform:scale(1.12);}100%{transform:scale(1);}}
+/* NO PILLS ANYWHERE IN COURSE LIST */
+#signup-courses-list span{ background:transparent !important; border:none !important; box-shadow:none !important; padding:0 !important; margin:0 !important; color:#000 !important; font-weight:500 !important; border-radius:0 !important; }
+#signup-courses-list .badge, #signup-courses-list [class*="badge"]{ background:transparent !important; border:none !important; color:#000 !important; }
+/* Invisible pills - strip grey oval behind title */
+#signup-courses-list > div{ background:#fff !important; border:1px solid #e5e7eb !important; border-radius:12px !important; }
+#signup-courses-list > div > div, #signup-courses-list > div div{ background:transparent !important; border:none !important; box-shadow:none !important; }
+#signup-courses-list b, #signup-courses-list strong{ color:#000 !important; }
+/* Course info clean black */
+#signup-courses-list{ color:#000 !important; }
+#signup-courses-list p, #signup-courses-list label, #signup-courses-list div{ color:#000 !important; }
+.signup-course-meta{ color:#000 !important; font-size:13px !important; font-weight:500 !important; margin-top:4px !important; }
+#signup-unit-badge{ background:none !important; border:none !important; color:#000 !important; }
+</style>
+
+
+<style id="exam-nav-fix">
+/* Exam - one clean bottom bar, nothing floating */
+#view-exam .exam-nav-bar{
+  position:fixed !important; left:0 !important; right:0 !important; bottom:0 !important; z-index:50 !important;
+  background:#fff !important; border-top:1px solid #e5e7eb !important;
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom)) 16px !important;
+  display:flex !important; align-items:center !important; justify-content:space-between !important; gap:12px !important;
+  box-shadow:0 -4px 20px rgba(0,0,0,0.06) !important;
+}
+#view-exam{ padding-bottom:90px !important; }
+/* Hide duplicate submits / stray nav buttons inside question area */
+#view-exam .exam-duplicate-submit{ display:none !important; }
+/* Exam buttons - uniform pills like login/signup */
+#view-exam button{ border-radius:999px !important; }
+#view-exam .btn-prev{ background:#fff !important; border:1px solid #e5e7eb !important; color:#000 !important; font-weight:600 !important; padding:10px 18px !important; }
+#view-exam .btn-next{ background:#0f5132 !important; color:#fff !important; font-weight:700 !important; padding:10px 22px !important; border:none !important; }
+#view-exam .btn-submit{ background:#0f5132 !important; color:#fff !important; font-weight:700 !important; }
+</style>
+
 </head>
 <body>
 
@@ -319,116 +391,191 @@
     </div>
 
     <!-- CANDIDATE LOGIN -->
-    <div id="view-cand-login" class="hidden bg-overlay">
-        <div class="glass flex-col">
-            <div class="text-center mb-4">
-                <span class="badge badge-green mb-2 portal-title-display">CBT Examination Portal</span>
-                <h2 class="text-2xl font-bold">Candidate Login</h2>
-                <p class="text-xs text-gray mt-1">Sign in with your username</p>
+            <div id="view-cand-login" class="hidden" style="background:#fff;min-height:100vh;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background-image:url('candidate.jpg');background-size:cover;background-position:center;"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.15) 0%,rgba(255,255,255,0.75) 45%,#ffffff 75%);"></div>
+        <div style="position:relative;max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding:20px 24px 32px 24px;">
+            <button type="button" onclick="app.nav('view-home')" aria-label="Back" style="width:40px;height:40px;border-radius:999px;background:#fff;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">←</button>
+            <div style="margin-top:auto;padding-top:48px;">
+                <h2 class="text-2xl font-bold" style="font-size:32px;line-height:1.1;">Login</h2>
+                <p class="text-xs text-gray mt-2" style="font-size:14px;">Don&apos;t have an account? <a href="#" onclick="app.nav('view-cand-signup'); app.auth.candSignupInit();" style="color:var(--g);font-weight:700;">sign up</a></p>
             </div>
             <p id="cand-login-err" class="text-error"></p>
-            <form onsubmit="app.auth.candLogin(event)">
-                <div class="input-group">
-                    <label>Username</label>
-                    <input type="text" id="cand-log-user" class="input" placeholder="Enter your username" required autocomplete="username">
+            <form onsubmit="app.auth.candLogin(event)" style="display:flex;flex-direction:column;gap:20px;margin-top:28px;">
+                <div class="input-group" style="margin:0;">
+                    <label style="margin-bottom:8px;display:block;">Username</label>
+                    <input type="text" id="cand-log-user" class="input" style="border-radius:999px;padding:14px 18px;background:#fff;" placeholder="Enter your username" required autocomplete="username">
                 </div>
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" id="cand-log-pass" class="input" placeholder="••••••••" required autocomplete="current-password">
+                <div class="input-group" style="margin:0;">
+                    <label style="margin-bottom:8px;display:block;">Password</label>
+                    <input type="password" id="cand-log-pass" class="input" style="border-radius:999px;padding:14px 18px;padding-right:52px;background:#fff;" placeholder="Password" required autocomplete="current-password">
                     <svg class="eye-icon" onclick="app.ui.togglePass('cand-log-pass')" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 </div>
-                <button type="submit" class="btn btn-primary w-full mt-2" id="btn-cand-log"><span><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> Sign In to Portal</span><div class="loader"></div></button>
+                <div style="display:flex;justify-content:flex-end;margin-top:8px;">
+                    <button type="submit" class="btn btn-primary" id="btn-cand-log" style="border-radius:999px;padding:12px 24px;width:auto;"><span>Sign in →</span><div class="loader"></div></button>
+                </div>
             </form>
-            <p class="text-center mt-4 text-sm">New student? <a href="#" onclick="app.nav('view-cand-signup'); app.auth.candSignupInit();" class="text-g font-semibold">Create Account & Register Courses</a></p>
-            <p class="text-center mt-2 text-sm"><a href="#" onclick="app.nav('view-home')" class="text-gray" style="display:inline-flex;align-items:center;gap:.4rem"><svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Back to home</a></p>
+            <p class="text-center mt-6 text-sm">New student? <a href="#" onclick="app.nav('view-cand-signup'); app.auth.candSignupInit();" class="text-g font-semibold">Create Account &amp; Register Courses</a></p>
+            <div style="height:24px;"></div>
         </div>
     </div>
 
     <!-- CANDIDATE SIGNUP -->
-    <div id="view-cand-signup" class="hidden bg-overlay" style="align-items: flex-start; padding-top: 2rem;">
-        <div class="glass flex-col" style="margin-bottom: 2rem; max-width: 680px;">
-            <div class="text-center mb-4">
-                <span class="badge badge-green mb-1 portal-title-display">CBT Examination Portal</span>
-                <h2 class="text-2xl font-bold">Candidate Registration</h2>
-                <p class="text-xs text-gray">Register your student profile & enroll in courses</p>
+        <div id="view-cand-signup" class="hidden" style="background:#fff;min-height:100vh;">
+        <div style="max-width:680px;margin:0 auto;padding:20px 24px 32px 24px;">
+            <button type="button" onclick="app.nav('view-cand-login')" aria-label="Back" style="width:40px;height:40px;border-radius:999px;background:#fff;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;">←</button>
+            <div style="margin-top:20px;">
+                <h2 class="text-2xl font-bold" style="font-size:28px;">Create Account</h2>
+                <p class="text-xs text-gray mt-1" style="font-size:14px;">Register your student profile &amp; enroll in courses</p>
+            </div>
+            <!-- STEPS -->
+            <div class="signup-steps-track">
+                <div class="signup-steps-line"><div id="signup-progress-fill"></div></div>
+                <div class="signup-step-dot active" data-step="1" style="width:32px;height:32px;border-radius:999px;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;">1</div>
+                <div style="flex:1;"></div>
+                <div class="signup-step-dot" data-step="2" style="width:32px;height:32px;border-radius:999px;background:#fff;border:2px solid #e5e7eb;color:#6b7280;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;">2</div>
+                <div style="flex:1;"></div>
+                <div class="signup-step-dot" data-step="3" style="width:32px;height:32px;border-radius:999px;background:#fff;border:2px solid #e5e7eb;color:#6b7280;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;">3</div>
+                <div style="flex:1;"></div>
+                <div class="signup-step-dot" data-step="4" style="width:32px;height:32px;border-radius:999px;background:#fff;border:2px solid #e5e7eb;color:#6b7280;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;">4</div>
             </div>
             <p id="cand-sign-err" class="text-error"></p>
             <form onsubmit="app.auth.candSignup(event)">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="input-group mb-0"><label>Full Name</label><input type="text" id="cand-sign-name" class="input" placeholder="e.g. John Doe" required></div>
-                    <div class="input-group mb-0"><label>Choose a username (3–12 characters)</label><input type="text" id="cand-sign-user" class="input" placeholder="Choose a username" required pattern="^[a-zA-Z0-9_]{3,12}$" title="Letters, numbers, underscores only. 3-12 characters." autocomplete="username"></div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
-                    <div class="input-group mb-0">
-                        <label>Academic Level</label>
-                        <select id="cand-sign-level" class="select" onchange="app.auth.renderSignupCourses()" required>
-                            <option value="100">100 Level</option><option value="200" selected>200 Level</option><option value="300">300 Level</option><option value="400">400 Level</option>
-                        </select>
-                    </div>
-                    <div class="input-group mb-0 md:col-span-2">
-                        <label>Department</label>
-                        <select id="cand-sign-dept" class="select" required>
-                            <option value="Mass Communication">Mass Communication</option><option value="Broadcasting">Broadcasting</option><option value="Journalism">Journalism</option><option value="Public Relations & Advertising">Public Relations & Advertising</option>
-                        </select>
+                <!-- STAGE 1 -->
+                <div class="signup-stage" data-stage="1">
+                    <h3 style="font-weight:700;font-size:18px;">Personal Information</h3>
+                    <p style="font-size:13px;color:#6b7280;margin:4px 0 16px 0;">Tell us who you are.</p>
+                    <div style="display:flex;flex-direction:column;gap:16px;">
+                        <div class="input-group" style="margin:0;"><label>Full Name *</label><input type="text" id="cand-sign-name" class="input" style="border-radius:12px;padding:12px 16px;" placeholder="e.g. John Doe" required></div>
+                        <div class="input-group" style="margin:0;"><label>Choose a username (3 to 12 characters) *</label><input type="text" id="cand-sign-user" class="input" style="border-radius:12px;padding:12px 16px;" placeholder="Choose a username" required pattern="^[a-zA-Z0-9_]{3,12}$" title="Letters, numbers, underscores only. 3 to 12 characters." autocomplete="username"></div>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
-                    <div class="input-group mb-0">
-                        <label>Password (min. 6 chars)</label>
-                        <input type="password" id="cand-sign-pass" class="input" required minlength="6">
-                        <svg class="eye-icon" onclick="app.ui.togglePass('cand-sign-pass')" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                    </div>
-                    <div class="input-group mb-0">
-                        <label>Confirm Password</label>
-                        <input type="password" id="cand-sign-pass2" class="input" required minlength="6">
-                        <svg class="eye-icon" onclick="app.ui.togglePass('cand-sign-pass2')" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                <!-- STAGE 2 -->
+                <div class="signup-stage" data-stage="2" style="display:none;">
+                    <h3 style="font-weight:700;font-size:18px;">Academic Information</h3>
+                    <p style="font-size:13px;color:#6b7280;margin:4px 0 16px 0;">Your level and department.</p>
+                    <div style="display:flex;flex-direction:column;gap:16px;">
+                        <div class="input-group" style="margin:0;"><label>Academic Level *</label><select id="cand-sign-level" class="select" style="border-radius:12px;padding:12px 16px;" onchange="app.auth.renderSignupCourses()" required><option value="100">100 Level</option><option value="200" selected>200 Level</option><option value="300">300 Level</option><option value="400">400 Level</option></select></div>
+                        <div class="input-group" style="margin:0;"><label>Department *</label><select id="cand-sign-dept" class="select" style="border-radius:12px;padding:12px 16px;" required><option value="Mass Communication">Mass Communication</option><option value="Broadcasting">Broadcasting</option><option value="Journalism">Journalism</option><option value="Public Relations &amp; Advertising">Public Relations &amp; Advertising</option></select></div>
                     </div>
                 </div>
-                <div class="input-group mt-4">
-                    <div class="flex flex-wrap justify-between items-center gap-2 mb-2">
-                        <label class="mb-0 font-bold" id="signup-reg-title">Course Registration</label>
-                        <span id="signup-unit-badge" class="badge badge-red">Selected: 0 Units</span>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-2">
-                        <input type="text" id="signup-course-search" class="input text-sm py-1.5" placeholder="Search code or title..." oninput="app.auth.renderSignupCourses()">
-                        <select id="signup-course-sem" class="select text-sm py-1.5" onchange="app.auth.renderSignupCourses()"><option value="ALL">All Semesters</option><option value="First Semester">First Semester</option><option value="Second Semester">Second Semester</option></select>
-                        <select id="signup-course-lvl-filter" class="select text-sm py-1.5" onchange="app.auth.renderSignupCourses()"><option value="ALL">All Eligible Levels</option><option value="CURRENT">My Level Only</option></select>
-                    </div>
-                    <div id="signup-courses-list" class="flex-col gap-2 p-3 border rounded-lg bg-glass overflow-y-auto max-h-[220px]">
-                        <p class="text-sm text-gray">Loading courses...</p>
-                    </div>
-                    <div class="flex justify-between items-center mt-2">
-                        <button type="button" class="btn btn-secondary text-xs py-1 px-2.5" onclick="app.auth.autoSelectRecommendedSignup()"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Auto-Select Recommended</button>
+                <!-- STAGE 3 -->
+                <div class="signup-stage" data-stage="3" style="display:none;">
+                    <h3 style="font-weight:700;font-size:18px;">Account Security</h3>
+                    <p style="font-size:13px;color:#6b7280;margin:4px 0 16px 0;">Choose a password you will remember.</p>
+                    <div style="display:flex;flex-direction:column;gap:16px;">
+                        <div class="input-group" style="margin:0;"><label>Password (minimum 6 characters) *</label><input type="password" id="cand-sign-pass" class="input" style="border-radius:12px;padding:12px 16px;" required minlength="6"><svg class="eye-icon" onclick="app.ui.togglePass('cand-sign-pass[STRIPPED 489 bytes]cand-sign-pass2')" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary w-full mt-2" id="btn-cand-sign"><span><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg> Create Account & Register Courses</span><div class="loader"></div></button>
+                <!-- STAGE 4 -->
+                <div class="signup-stage" data-stage="4" style="display:none;">
+                    <h3 style="font-weight:700;font-size:18px;">Course Registration</h3>
+                    <p style="font-size:13px;color:#6b7280;margin:4px 0 16px 0;">Pick your courses, then create your account.</p>
+                    <div class="input-group mt-0">
+                        <div class="flex flex-wrap justify-between items-center gap-2 mb-2"><label class="mb-0 font-bold" id="signup-reg-title">Course Registration</label><span id="signup-unit-badge" style="background:none !important;border:none !important;color:#000 !important;font-weight:600;font-size:13px;padding:0;">Selected: 0 Units</span></div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-2">
+                            <input type="text" id="signup-course-search" class="input text-sm py-1.5" placeholder="Search code or title..." oninput="app.auth.renderSignupCourses()">
+                            <select id="signup-course-sem" class="select text-sm py-1.5" onchange="app.auth.renderSignupCourses()"><option value="ALL">All Semesters</option><option value="First Semester">First Semester</option><option value="Second Semester">Second Semester</option></select>
+                            <select id="signup-course-lvl-filter" class="select text-sm py-1.5" onchange="app.auth.renderSignupCourses()"><option value="ALL">All Eligible Levels</option><option value="CURRENT">My Level Only</option></select>
+                        </div>
+                        <div id="signup-courses-list" class="flex-col gap-2 p-3 border rounded-lg bg-glass overflow-y-auto max-h-[220px]"><p class="text-sm text-gray">Loading courses...</p></div>
+                        <div class="flex justify-between items-center mt-2"><button type="button" class="btn btn-secondary text-xs py-1 px-2.5" onclick="app.auth.autoSelectRecommendedSignup()">Auto-Select Recommended</button></div>
+                    </div>
+                </div>
+                <!-- NAV -->
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:28px;">
+                    <button type="button" id="btn-signup-prev" onclick="window.signupGo(-1)" style="display:none;padding:10px 18px;border-radius:999px;border:1px solid #e5e7eb;background:#fff;font-weight:600;">← Previous</button>
+                    <div style="flex:1;"></div>
+                    <button type="button" id="btn-signup-next" onclick="window.signupGo(1)" style="padding:10px 22px;border-radius:999px;background:var(--g);color:#fff;font-weight:700;">Next →</button>
+                    <button type="submit" id="btn-cand-sign" style="display:none;padding:10px 22px;border-radius:999px;background:var(--g);color:#fff;font-weight:700;"><span>Create Account →</span><div class="loader"></div></button>
+                </div>
             </form>
             <p class="text-center mt-4 text-sm">Already have an account? <a href="#" onclick="app.nav('view-cand-login')" class="text-g font-semibold">Sign in</a></p>
         </div>
     </div>
+    <script>
+    window._signupStage = 1;
+    window.signupShow = function(n){
+        var fill = document.getElementById('signup-progress-fill');
+        if(fill){ var pct = {1:0,2:33,3:66,4:100}[Math.max(1,Math.min(4,n))] || 0; requestAnimationFrame(function(){ fill.style.width = pct + '%'; }); }
+        window._signupStage = Math.max(1, Math.min(4, n));
+        document.querySelectorAll('.signup-stage').forEach(el => { el.style.display = (parseInt(el.dataset.stage) === window._signupStage) ? '' : 'none'; });
+        document.querySelectorAll('.signup-step-dot').forEach(el => {
+            var _s = parseInt(el.dataset.step);
+            el.classList.remove('active','done','hit');
+            if(_s === window._signupStage){ el.classList.add('active'); }
+            if(_s < window._signupStage){ el.classList.add('done'); }
+            // keep number visible - never clear text
+            if(!el.textContent.trim()){ el.textContent = String(_s); }
+        });
+        // bounce the bubble water just reached
+        setTimeout(function(){
+            var target = document.querySelector('.signup-step-dot[data-step="'+window._signupStage+'"]');
+            if(target){ target.classList.remove('hit'); void target.offsetWidth; target.classList.add('hit'); }
+        }, 650);
+        document.querySelectorAll('.signup-step-dot').forEach(el => {
+            var s = parseInt(el.dataset.step);
+            if(s === window._signupStage){ el.style.background='var(--g)'; el.style.color='#fff'; el.style.border='2px solid var(--g)'; }
+            else if(s < window._signupStage){ el.style.background='#e6f4ec'; el.style.color='var(--g)'; el.style.border='2px solid var(--g)'; }
+            else { el.style.background='#fff'; el.style.color='#6b7280'; el.style.border='2px solid #e5e7eb'; }
+        });
+        var prev = document.getElementById('btn-signup-prev');
+        var next = document.getElementById('btn-signup-next');
+        var submit = document.getElementById('btn-cand-sign');
+        if(prev) prev.style.display = window._signupStage > 1 ? '' : 'none';
+        if(next) next.style.display = window._signupStage < 4 ? '' : 'none';
+        if(submit) submit.style.display = window._signupStage === 4 ? '' : 'none';
+        if(window._signupStage === 4 && window.app && window.app.auth && window.app.auth.renderSignupCourses){ try{ window.app.auth.renderSignupCourses(); }catch(e){} }
+    };
+    window.signupGo = function(dir){
+        if(dir > 0){
+            var cur = document.querySelector('.signup-stage[data-stage="'+window._signupStage+'"]');
+            if(cur){
+                var inputs = cur.querySelectorAll('input[required], select[required]');
+                for(var i=0;i<inputs.length;i++){ if(!inputs[i].checkValidity()){ inputs[i].reportValidity(); return; } }
+                if(window._signupStage === 3){
+                    var p1 = document.getElementById('cand-sign-pass');
+                    var p2 = document.getElementById('cand-sign-pass2');
+                    if(p1 && p2 && p1.value !== p2.value){ alert('Passwords do not match'); p2.focus(); return; }
+                }
+            }
+        }
+        window.signupShow(window._signupStage + dir);
+    };
+    // Reset to stage 1 whenever signup is opened
+    (function(){
+        var orig = window.app && window.app.auth && window.app.auth.candSignupInit;
+        // also expose reset on nav: poll for view change is too heavy, just reset on load of this script and when user clicks sign up link we already call candSignupInit which will be wrapped below if exists
+        setTimeout(function(){ window.signupShow(1); }, 50);
+    })();
+    </script>
 
     <!-- ADMIN LOGIN -->
-    <div id="view-admin-login" class="hidden bg-overlay">
-        <div class="glass flex-col">
-            <div class="text-center mb-4">
-                <span class="badge badge-green mb-2 portal-title-display">CBT Examination Portal</span>
-                <h2 class="text-2xl font-bold" id="admin-auth-heading">Admin Portal Login</h2>
-                <p class="text-xs text-gray mt-1">Super Admins, Standard Admins & Exam Managers</p>
+        <div id="view-admin-login" class="hidden" style="background:#fff;min-height:100vh;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background-image:url('admin.jpg');background-size:cover;background-position:center;"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.15) 0%,rgba(255,255,255,0.75) 45%,#ffffff 75%);"></div>
+        <div style="position:relative;max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding:20px 24px 32px 24px;">
+            <button type="button" onclick="app.nav('view-home')" aria-label="Back" style="width:40px;height:40px;border-radius:999px;background:#fff;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">←</button>
+            <div style="margin-top:auto;padding-top:48px;">
+                <h2 class="text-2xl font-bold" id="admin-auth-heading" style="font-size:32px;line-height:1.1;">Admin Login</h2>
+                <p class="text-xs text-gray mt-2" style="font-size:14px;">Super Admins, Standard Admins &amp; Exam Managers</p>
             </div>
             <p id="admin-login-err" class="text-error"></p>
-            <form id="form-admin-login" onsubmit="app.auth.adminLogin(event)">
-                <div class="input-group">
-                    <label>Email Address</label>
-                    <input type="email" id="admin-log-email" class="input" placeholder="admin@portal.com" required autocomplete="email">
+            <form id="form-admin-login" onsubmit="app.auth.adminLogin(event)" style="display:flex;flex-direction:column;gap:20px;margin-top:28px;">
+                <div class="input-group" style="margin:0;">
+                    <label style="margin-bottom:8px;display:block;">Email Address</label>
+                    <input type="email" id="admin-log-email" class="input" style="border-radius:999px;padding:14px 18px;background:#fff;" placeholder="admin@portal.com" required autocomplete="email">
                 </div>
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" id="admin-log-pass" class="input" placeholder="••••••••" required autocomplete="current-password">
+                <div class="input-group" style="margin:0;">
+                    <label style="margin-bottom:8px;display:block;">Password</label>
+                    <input type="password" id="admin-log-pass" class="input" style="border-radius:999px;padding:14px 18px;padding-right:52px;background:#fff;" placeholder="Password" required autocomplete="current-password">
                     <svg class="eye-icon" onclick="app.ui.togglePass('admin-log-pass')" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 </div>
-                <button type="submit" class="btn btn-primary w-full mt-2" id="btn-admin-log"><span><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg> Sign In as Administrator</span><div class="loader"></div></button>
+                <div style="display:flex;justify-content:flex-end;margin-top:8px;">
+                    <button type="submit" class="btn btn-primary" id="btn-admin-log" style="border-radius:999px;padding:12px 24px;width:auto;"><span>Sign in →</span><div class="loader"></div></button>
+                </div>
             </form>
-            <p class="text-center mt-2 text-sm"><a href="#" onclick="app.nav('view-home')" class="text-gray" style="display:inline-flex;align-items:center;gap:.4rem"><svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Back to home</a></p>
+            <div style="height:24px;"></div>
         </div>
     </div>
 
@@ -1346,7 +1493,7 @@ nav: (viewId, updateUrl = true) => {
                     if (eligible.length > 0) {
                         c.innerHTML = eligible.map(cr => {
                             const isCh = app.auth.signupSelectedIds.has(cr.id);
-                            return `<label class="flex items-center justify-between gap-2 p-2 border rounded cursor-pointer hover:bg-slate-50 text-sm ${isCh ? 'border-emerald-600 bg-emerald-50/40' : ''}"><div class="flex items-center gap-2"><input type="checkbox" value="${app.ui.esc(cr.id)}" ${isCh ? 'checked' : ''} onchange="app.auth.toggleSignupCourse('${app.ui.esc(cr.id)}', this.checked)"><span><strong>${app.ui.esc(cr.code)}</strong> — ${app.ui.esc(cr.title)}</span></div><div class="flex items-center gap-1.5"><span class="badge badge-gray">${cr.level}L</span><span class="badge badge-blue">${cr.semester==='First Semester'?'1st Sem':'2nd Sem'}</span><span class="badge badge-green">${cr.units}u</span></div></label>`;
+                            return `<label class="flex items-center justify-between gap-2 p-2 border rounded cursor-pointer hover:bg-slate-50 text-sm ${isCh ? 'border-emerald-600 bg-emerald-50/40' : ''}"><div class="flex items-center gap-2"><input type="checkbox" value="${app.ui.esc(cr.id)}" ${isCh ? 'checked' : ''} onchange="app.auth.toggleSignupCourse('${app.ui.esc(cr.id)}', this.checked)"><span><strong>${app.ui.esc(cr.code)}</strong> — ${app.ui.esc(cr.title)}</span></div><div class="flex items-center gap-1.5"><span class="badge badge-gray">${cr.level}L</span><span class="badge badge-blue">${cr.semester==='First Semester'?'First Semester':'Second Semester'}</span><span class="badge badge-green">${cr.units} Units</span></div></label>`;
                         }).join('');
                     } else c.innerHTML = '<p class="text-sm text-gray">No courses found.</p>';
                     app.auth.updateSignupUnitBadge();
@@ -1460,7 +1607,7 @@ nav: (viewId, updateUrl = true) => {
                                                     if (exhausted) { btnText = 'Attempts Exhausted'; btnClass = 'btn-secondary'; canStart = false; }
                                                     else if (!canStart && mySched) { btnText = lockoutMsg; btnClass = 'btn-secondary'; }
 
-                                                    return `<div class="card flex-col"><div class="flex justify-between mb-2"><div><span class="badge badge-gray">${app.ui.esc(ex.course_code)}</span> <span class="badge badge-green">${ex.units}u</span></div><span class="text-xs font-semibold">${ex.total_questions} Qs</span></div><h3 class="font-bold text-lg mb-1">${app.ui.esc(ex.title)}</h3><p class="text-xs text-gray mb-4">${ex.duration_seconds/60} mins • Attempts: ${attUsed}/${attAllowed}</p>${isSub ? `<button class="btn btn-secondary w-full mt-auto" onclick="app.cand.switchTab('results', document.querySelectorAll('#view-cand-portal .nav-item')[2])"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> View Result</button>` : `<button class="btn ${btnClass} w-full mt-auto" ${!canStart?'disabled':''} onclick="app.exam.prepare('${app.ui.esc(ex.id)}', '${app.ui.esc(ex.course_code)}', ${ex.duration_seconds/60}, '${app.ui.esc(ex.semester)}')">${btnText}</button>`}
+                                                    return `<div class="card flex-col"><div class="flex justify-between mb-2"><div><span class="badge badge-gray">${app.ui.esc(ex.course_code)}</span> <span class="badge badge-green">${ex.units} Units</span></div><span class="text-xs font-semibold">${ex.total_questions} Qs</span></div><h3 class="font-bold text-lg mb-1">${app.ui.esc(ex.title)}</h3><p class="text-xs text-gray mb-4">${ex.duration_seconds/60} mins • Attempts: ${attUsed}/${attAllowed}</p>${isSub ? `<button class="btn btn-secondary w-full mt-auto" onclick="app.cand.switchTab('results', document.querySelectorAll('#view-cand-portal .nav-item')[2])"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> View Result</button>` : `<button class="btn ${btnClass} w-full mt-auto" ${!canStart?'disabled':''} onclick="app.exam.prepare('${app.ui.esc(ex.id)}', '${app.ui.esc(ex.course_code)}', ${ex.duration_seconds/60}, '${app.ui.esc(ex.semester)}')">${btnText}</button>`}
                                                         </div>`;
                                                 }).join('')}
                                             </div></div>`;
@@ -1587,7 +1734,7 @@ nav: (viewId, updateUrl = true) => {
                     levels.forEach(lvl => {
                         const lC = en.filter(c=>c.level===lvl);
                         html += `<div class="card p-4 mb-4"><h4 class="font-bold border-b pb-2 mb-2">${lvl}L</h4><div class="flex-col gap-2">`;
-                        html += lC.map(c => `<div class="p-2 border rounded bg-slate-50 flex justify-between items-center"><div><strong>${app.ui.esc(c.code)}</strong> <span class="badge badge-green">${c.units}u</span><br><span class="text-xs">${app.ui.esc(c.raw_title)}</span></div><button class="btn btn-secondary text-xs text-red" onclick="app.cand.dropCourse('${app.ui.esc(c.id)}')"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg> Drop</button></div>`).join('');
+                        html += lC.map(c => `<div class="p-2 border rounded bg-slate-50 flex justify-between items-center"><div><strong>${app.ui.esc(c.code)}</strong> <span class="badge badge-green">${c.units} Units</span><br><span class="text-xs">${app.ui.esc(c.raw_title)}</span></div><button class="btn btn-secondary text-xs text-red" onclick="app.cand.dropCourse('${app.ui.esc(c.id)}')"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg> Drop</button></div>`).join('');
                         html += `</div></div>`;
                     });
                     document.getElementById('cand-enrolled-list').innerHTML = html;
@@ -1603,7 +1750,7 @@ nav: (viewId, updateUrl = true) => {
                             return `<label class="flex justify-between p-3 border rounded cursor-pointer ${ch?'bg-emerald-50 border-emerald-400':''}">
                                 <div class="flex gap-2"><input type="checkbox" value="${app.ui.esc(c.id)}" ${ch?'checked':''} onchange="app.cand.toggleCourseSelection('${app.ui.esc(c.id)}',this.checked)">
                                 <div><strong>${app.ui.esc(c.code)}</strong><br><span class="text-xs text-gray">${app.ui.esc(c.raw_title)}</span></div></div>
-                                <div><span class="badge badge-gray">${c.level}L</span> <span class="badge badge-green">${c.units}u</span></div>
+                                <div><span class="badge badge-gray">${c.level}L</span> <span class="badge badge-green">${c.units} Units</span></div>
                             </label>`;
                         }).join('');
                     } else list.innerHTML = '<p class="p-4 text-center">No courses found.</p>';
@@ -1752,7 +1899,7 @@ nav: (viewId, updateUrl = true) => {
                         lvls.forEach(lvl => {
                             const lc = filtered.filter(c=>c.level===lvl);
                             html += `<div class="card p-0 mb-6"><div class="p-4 border-b font-bold">${lvl}L Courses</div><div class="table-container"><table><thead><tr><th>Code</th><th>Title</th><th>Tag</th><th>Units</th><th>Status</th><th>Action</th></tr></thead><tbody>`;
-                            html += lc.map(c=>`<tr><td><b>${app.ui.esc(c.code)}</b></td><td>${app.ui.esc(c.title)}</td><td><span class="badge badge-gray">${app.ui.esc(c.tag||'Other')}</span></td><td>${c.units}u</td><td>${c.is_active?'<span class="badge badge-green">Released</span>':'<span class="badge badge-gray">Hidden</span>'}</td><td><button class="btn btn-secondary py-1" onclick="app.admin.openCourseDetail('${app.ui.esc(c.id)}')"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Settings</button></td></tr>`).join('');
+                            html += lc.map(c=>`<tr><td><b>${app.ui.esc(c.code)}</b></td><td>${app.ui.esc(c.title)}</td><td><span class="badge badge-gray">${app.ui.esc(c.tag||'Other')}</span></td><td>${c.units} Units</td><td>${c.is_active?'<span class="badge badge-green">Released</span>':'<span class="badge badge-gray">Hidden</span>'}</td><td><button class="btn btn-secondary py-1" onclick="app.admin.openCourseDetail('${app.ui.esc(c.id)}')"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Settings</button></td></tr>`).join('');
                             html += `</tbody></table></div></div>`;
                         });
                         document.getElementById('adm-courses-grouped-container').innerHTML = html || '<p>No courses found.</p>';
@@ -1919,7 +2066,7 @@ nav: (viewId, updateUrl = true) => {
                         const tbody = document.getElementById(role==='candidate' ? 'adm-cand-list' : 'adm-admins-list');
                         if (role==='candidate') {
                             const lf = state.adminCandLevelFilter; const f = d.filter(u => lf==='ALL' || u.level===Number(lf));
-                            tbody.innerHTML = f.map(u => `<tr><td><b>${app.ui.esc(u.full_name)}</b></td><td>@${app.ui.esc(u.username)}</td><td>${u.level}L</td><td>${u.gpa}</td><td>${app.ui.esc(u.status)}</td><td>${u.total_units}u</td><td><div class="flex flex-wrap gap-1"><button class="btn btn-primary py-1 text-xs" onclick="app.admin.openEnrollModal('${app.ui.esc(u.id)}', '${app.ui.esc(u.full_name)}')"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg> Enroll</button><button class="btn btn-secondary py-1 text-xs" onclick="app.admin.resetPass('${app.ui.esc(u.id)}')"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Reset</button><button class="btn btn-secondary py-1 text-xs" onclick="app.admin.modals.openGrantAttempt('${app.ui.esc(u.id)}', '${app.ui.esc(u.full_name)}')"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg> Grant Attempt</button><button class="btn btn-secondary py-1 text-xs" onclick="app.admin.modals.openPromote('${app.ui.esc(u.id)}', '${app.ui.esc(u.full_name)}', ${u.level})"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Promote</button> ${isS?`<button class="btn btn-secondary text-red py-1 text-xs" onclick="app.admin.delUser('${app.ui.esc(u.id)}')"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg> Del</button>`:''}</div></td></tr>`).join('');
+                            tbody.innerHTML = f.map(u => `<tr><td><b>${app.ui.esc(u.full_name)}</b></td><td>@${app.ui.esc(u.username)}</td><td>${u.level}L</td><td>${u.gpa}</td><td>${app.ui.esc(u.status)}</td><td>${u.total_units} Units</td><td><div class="flex flex-wrap gap-1"><button class="btn btn-primary py-1 text-xs" onclick="app.admin.openEnrollModal('${app.ui.esc(u.id)}', '${app.ui.esc(u.full_name)}')"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg> Enroll</button><button class="btn btn-secondary py-1 text-xs" onclick="app.admin.resetPass('${app.ui.esc(u.id)}')"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Reset</button><button class="btn btn-secondary py-1 text-xs" onclick="app.admin.modals.openGrantAttempt('${app.ui.esc(u.id)}', '${app.ui.esc(u.full_name)}')"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg> Grant Attempt</button><button class="btn btn-secondary py-1 text-xs" onclick="app.admin.modals.openPromote('${app.ui.esc(u.id)}', '${app.ui.esc(u.full_name)}', ${u.level})"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Promote</button> ${isS?`<button class="btn btn-secondary text-red py-1 text-xs" onclick="app.admin.delUser('${app.ui.esc(u.id)}')"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg> Del</button>`:''}</div></td></tr>`).join('');
                         } else {
                             tbody.innerHTML = d.map(u => `<tr><td><b>${app.ui.esc(u.full_name)}</b></td><td>${app.ui.esc(u.email)}</td><td>${app.ui.esc(u.admin_role)}</td><td>${app.ui.esc(u.status)}</td><td>${isS && u.id!==state.user.id ? `<button class="btn btn-secondary text-red py-1" onclick="app.admin.delUser('${app.ui.esc(u.id)}')"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg> Del</button>`:''}</td></tr>`).join('');
                         }
@@ -1967,7 +2114,7 @@ nav: (viewId, updateUrl = true) => {
                         <div class="flex-col gap-2 p-3 border rounded-lg bg-glass overflow-y-auto max-h-[240px]">
                             ${filtered.map(cr => {
                                 const isCh = stateObj.enrolledIds.has(cr.id);
-                                return `<label class="flex items-center justify-between gap-2 p-2 border rounded cursor-pointer hover:bg-slate-50 text-sm ${isCh?'border-emerald-600 bg-emerald-50/40':''}"><div class="flex items-center gap-2"><input type="checkbox" value="${app.ui.esc(cr.id)}" ${isCh?'checked':''} onchange="app.admin.toggleAdminEnrollCourse('${app.ui.esc(cr.id)}', this.checked)"><span><strong>${app.ui.esc(cr.code)}</strong> — ${app.ui.esc(cr.title)}</span></div><div class="flex items-center gap-1.5"><span class="badge badge-gray">${cr.level}L</span><span class="badge badge-green">${cr.units}u</span></div></label>`;
+                                return `<label class="flex items-center justify-between gap-2 p-2 border rounded cursor-pointer hover:bg-slate-50 text-sm ${isCh?'border-emerald-600 bg-emerald-50/40':''}"><div class="flex items-center gap-2"><input type="checkbox" value="${app.ui.esc(cr.id)}" ${isCh?'checked':''} onchange="app.admin.toggleAdminEnrollCourse('${app.ui.esc(cr.id)}', this.checked)"><span><strong>${app.ui.esc(cr.code)}</strong> — ${app.ui.esc(cr.title)}</span></div><div class="flex items-center gap-1.5"><span class="badge badge-gray">${cr.level}L</span><span class="badge badge-green">${cr.units} Units</span></div></label>`;
                             }).join('') || '<p class="text-sm text-gray">No courses found.</p>'}
                         </div>
                         <div class="flex items-center gap-2 mt-2"><input type="checkbox" id="adm-enr-override" ${override?'checked':''}><label for="adm-enr-override" class="text-xs font-semibold cursor-pointer">Override min/max unit validation rule</label></div>
@@ -2318,6 +2465,79 @@ nav: (viewId, updateUrl = true) => {
             app.init();
         }
     </script>
+
+<script>
+(function(){
+  var origRender = window.app && window.app.auth && window.app.auth.renderSignupCourses;
+  function cleanPills(){
+    var list = document.getElementById('signup-courses-list');
+    if(!list) return;
+    list.querySelectorAll('span').forEach(function(s){
+      var t = s.textContent.trim();
+      // 100L -> 100 Level, 2u -> 2 Units, Sem -> Semester
+      if(/^[0-9]+L$/.test(t)) s.textContent = t.replace('L',' Level');
+      if(/^[0-9]+u$/.test(t)) s.textContent = t.replace('u',' Units');
+      if(t === '1st Sem') s.textContent = 'First Semester';
+      if(t === '2nd Sem') s.textContent = 'Second Semester';
+      if(t.endsWith(' Sem')) s.textContent = t.replace(' Sem',' Semester');
+      // force uniform look
+      s.style.background = '#f1f5f9'; s.style.color = '#334155'; s.style.border = '1px solid #e2e8f0';
+    });
+  }
+  // Wrap original render if it exists, else observe list
+  if(origRender){
+    window.app.auth.renderSignupCourses = function(){ var r = origRender.apply(this, arguments); setTimeout(cleanPills, 30); return r; };
+  }
+  var obs = new MutationObserver(function(){ cleanPills(); });
+  var listEl = document.getElementById('signup-courses-list');
+  if(listEl) obs.observe(listEl, {childList:true, subtree:true});
+  // Also clean on stage 4 show
+  var oldShow = window.signupShow;
+  window.signupShow = function(n){ if(oldShow) oldShow(n); setTimeout(cleanPills, 80); };
+})();
+</script>
+
+
+<script>
+(function(){
+  function fixExamNav(){
+    var view = document.getElementById('view-exam');
+    if(!view) return;
+    // Find buttons with Previous / Next / Submit text
+    var btns = Array.from(view.querySelectorAll('button'));
+    var prev = btns.find(function(b){ return /previous/i.test(b.textContent); });
+    var next = btns.find(function(b){ return /^next/i.test(b.textContent.trim()); });
+    var submits = btns.filter(function(b){ return /submit/i.test(b.textContent); });
+    // Keep only ONE submit - hide the rest
+    submits.slice(1).forEach(function(b){ b.classList.add('exam-duplicate-submit'); });
+    // Style them
+    if(prev) prev.classList.add('btn-prev');
+    if(next) next.classList.add('btn-next');
+    submits.forEach(function(b){ b.classList.add('btn-submit'); });
+    // If Prev + Next exist and not yet in a bar, wrap them
+    if(prev && next && !prev.closest('.exam-nav-bar')){
+      var bar = document.createElement('div');
+      bar.className = 'exam-nav-bar';
+      var center = document.createElement('div');
+      center.style.cssText = 'font-weight:600;font-size:14px;color:#000;';
+      center.id = 'exam-nav-center';
+      center.textContent = 'Question';
+      // Move prev/next into bar
+      var pParent = prev.parentNode;
+      bar.appendChild(prev);
+      bar.appendChild(center);
+      bar.appendChild(next);
+      view.appendChild(bar);
+    }
+  }
+  // Run when exam opens + on any DOM change inside exam
+  var obs = new MutationObserver(function(){ fixExamNav(); });
+  var examEl = document.getElementById('view-exam');
+  if(examEl) obs.observe(examEl, {childList:true, subtree:true});
+  setInterval(fixExamNav, 1000);
+})();
+</script>
+
 </body>
 </html>
 
