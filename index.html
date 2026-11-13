@@ -1107,7 +1107,7 @@
                     }
 
                     if (!session) {
-                        app.nav('view-home');
+                        app.nav(app.routeForPath(), false);
                         app.utils.withTimeout(app.api.rpc('get_settings'), 4000, "Settings timeout").then(settings => {
                             app.utils.applySettings(settings);
                         }).catch(() => {});
@@ -1130,7 +1130,35 @@
                     if (boot) boot.classList.add('hidden');
                 }
             },
-            nav: (viewId) => { document.querySelectorAll('body > div[id^="view-"]').forEach(el => el.classList.add('hidden')); const target = document.getElementById(viewId); if(target) target.classList.remove('hidden'); },
+            routeForPath: () => {
+    const path = location.pathname.replace(/\/$/, '') || '/';
+    const routes = {
+        '/': 'view-home',
+        '/candidate-login': 'view-cand-login',
+        '/register': 'view-cand-signup',
+        '/admin-login': 'view-admin-login'
+    };
+    return routes[path] || 'view-home';
+},
+nav: (viewId, updateUrl = true) => {
+    document.querySelectorAll('body > div[id^="view-"]').forEach(el => el.classList.add('hidden'));
+    const target = document.getElementById(viewId);
+    if (target) target.classList.remove('hidden');
+
+    const routes = {
+        'view-home': '/',
+        'view-cand-login': '/candidate-login',
+        'view-cand-signup': '/register',
+        'view-admin-login': '/admin-login',
+        'view-cand-portal': '/candidate',
+        'view-admin-portal': '/admin',
+        'view-exam': '/exam'
+    };
+
+    if (updateUrl && routes[viewId] && location.pathname !== routes[viewId]) {
+        history.pushState({}, '', routes[viewId]);
+    }
+},
             ui: {
                 toast: (msg, isErr = false) => { const t = document.getElementById('toast'); t.textContent = msg; t.className = 'toast show ' + (isErr ? 'error' : ''); setTimeout(() => t.classList.remove('show'), 3500); },
                 setBanner: (portal, show) => { const el = document.getElementById(portal + '-welcome-banner'); if (!el) return; (show && el.innerHTML) ? el.classList.remove('hidden') : el.classList.add('hidden'); },
@@ -2266,6 +2294,16 @@
                 }
             }
         };
+
+
+        window.addEventListener('popstate', () => {
+            const path = location.pathname.replace(/\/$/, '') || '/';
+            if (['/', '/candidate-login', '/register', '/admin-login'].includes(path)) {
+                app.nav(app.routeForPath(), false);
+            } else {
+                app.auth.check();
+            }
+        });
 
         document.addEventListener('click', (e) => {
             if (e.target.closest('.sidebar .nav-item, .sidebar button')) {
