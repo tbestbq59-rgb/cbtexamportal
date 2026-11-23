@@ -3794,6 +3794,767 @@ setTimeout(function(){tabs();refresh();},600);
   .aa-title{font-size:16px;}
 }
 </style>
+<style id="aa3">/*aa3*/
+:root{--a3-bg:#f7f7f8;--a3-card:#ffffff;--a3-ln:#E0E1E6;--a3-tx:#1e293b;--a3-mu:#64748b;--a3-gr:#3d5a4c;--a3-pl:#e6efe8;}
+@media (prefers-color-scheme: dark){:root{--a3-bg:#0f0f10;--a3-card:#1a1a1c;--a3-ln:#2e2e32;--a3-tx:#f1f5f9;--a3-mu:#9ca3af;--a3-gr:#9fd3b1;--a3-pl:#22352a;}}
+.a3-full{background:var(--a3-bg);color:var(--a3-tx);padding:14px 16px 40px;max-width:100%;overflow-x:hidden;box-sizing:border-box;}
+.a3-backrow{display:flex;align-items:center;gap:10px;background:none;border:0;color:var(--a3-tx);font-size:15px;font-weight:600;padding:6px 0;cursor:pointer;margin-bottom:18px;}
+.a3-eye{font-size:12px;letter-spacing:.06em;color:var(--a3-mu);text-transform:uppercase;font-weight:600;}
+.a3-h{font-size:28px;font-weight:800;margin:4px 0 2px;overflow-wrap:anywhere;}
+.a3-sub{font-size:14px;color:var(--a3-mu);margin:0 0 14px;}
+.a3-pill{display:inline-block;padding:6px 14px;border-radius:999px;background:var(--a3-pl);color:var(--a3-gr);font-size:13px;font-weight:600;margin-bottom:18px;}
+.a3-card{background:var(--a3-card);border:1px solid var(--a3-ln);border-radius:20px;padding:20px;margin-bottom:16px;}
+.a3-card h3{font-size:18px;font-weight:700;margin:0 0 16px;}
+.a3-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 14px;}
+.a3-k{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--a3-mu);margin-bottom:4px;}
+.a3-v{font-size:16px;font-weight:600;overflow-wrap:anywhere;}
+.a3-item{border:1px solid var(--a3-ln);border-radius:16px;padding:16px;margin-bottom:12px;}
+.a3-item:last-child{margin-bottom:0;}
+.a3-row2{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.a3-tag{font-size:13px;font-weight:600;color:var(--a3-gr);white-space:nowrap;}
+.a3-tag.mu{color:var(--a3-mu);}
+.a3-line{font-size:14px;color:var(--a3-mu);margin-top:8px;}
+.a3-stop{width:100%;height:52px;border-radius:14px;border:1px solid #dc2626;background:transparent;color:#dc2626;font-weight:700;font-size:15px;cursor:pointer;}
+.a3-search{width:100%;height:50px;border-radius:14px;border:1px solid var(--a3-ln);background:var(--a3-card);color:var(--a3-tx);padding:0 16px;font-size:15px;box-sizing:border-box;margin-bottom:14px;}
+.a3-tbl{background:var(--a3-card);border:1px solid var(--a3-ln);border-radius:20px;overflow:hidden;}
+.a3-th,.a3-tr{display:grid;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--a3-ln);font-size:14px;}
+.a3-th{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--a3-mu);font-weight:600;}
+.a3-tr:last-child{border-bottom:0;}
+.a3-main{grid-template-columns:minmax(0,1.2fr) minmax(0,.6fr) minmax(0,1fr) minmax(0,1fr);}
+.a3-stu{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto auto;}
+.a3-sbm{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);}
+.a3-nm{font-weight:600;overflow-wrap:anywhere;}
+.a3-ic{width:52px;height:44px;border-radius:12px;border:1px solid var(--a3-ln);background:var(--a3-card);color:var(--a3-tx);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.a3-ic.on{background:var(--a3-gr);border-color:var(--a3-gr);color:var(--a3-bg);}
+.a3-st{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--a3-pl);color:var(--a3-gr);display:inline-block;}
+.a3-st.p{background:transparent;border:1px solid var(--a3-mu);color:var(--a3-mu);}
+.a3-empty{padding:28px;text-align:center;color:var(--a3-mu);font-size:14px;}
+@media (max-width:480px){
+  .a3-grid{grid-template-columns:1fr;}
+  .a3-h{font-size:24px;}
+  .a3-th,.a3-tr{padding:12px;gap:6px;font-size:13px;}
+  .a3-main{grid-template-columns:minmax(0,1.3fr) minmax(0,.5fr) minmax(0,.9fr) minmax(0,.9fr);}
+  .a3-stu{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) auto auto;}
+}
+</style>
+<script id="aa3js">
+(function(){
+var ICON_BACK='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>';
+var ICON_PAUSE='<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+var ICON_PLAY='<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="7 5 19 12 7 19 7 5"/></svg>';
+var courses=[],cur=null,students=[],q='';
+function E(s){return app.ui.esc(s==null?'':String(s));}
+function N(x){return Number(x)||0;}
+function box(){return document.getElementById('adm-res-att');}
+function put(h){var b=box();if(b){b.innerHTML='<div class="a3-full">'+h+'</div>';window.scrollTo(0,0);}}
+function err(e){app.ui.toast((e&&e.message)||'Something went wrong.',true);}
+function dur(s){s=Math.max(0,Math.round(Number(s)||0));return Math.floor(s/60)+'m '+(s%60)+'s';}
+function tm(v){var d=v?new Date(v):null;return d&&!isNaN(d)?d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'';}
+function back(){return '<button class="a3-backrow" onclick="app.admin.aaCourses()">'+ICON_BACK+'<span>Back to Active Attempts</span></button>';}
+function head(eye,title,sub){return back()+(eye?'<div class="a3-eye">'+E(eye)+'</div>':'')+'<h2 class="a3-h">'+E(title)+'</h2>'+(sub?'<p class="a3-sub">'+E(sub)+'</p>':'');}
+
+app.admin.aaCourses=async function(){
+  cur=null; put('<div class="a3-empty">Loading...</div>');
+  try{
+    var all=await app.api.rpc('admin_course_counts');
+    var lf=(typeof state!=='undefined'&&state.adminResLevelFilter)||'ALL';
+    courses=(all||[]).filter(function(c){return lf==='ALL'||String(c.level)===String(lf);});
+    var h='<div class="a3-tbl"><div class="a3-th a3-main"><span>Course</span><span>Level</span><span>Active Students</span><span>Submitted</span></div>';
+    if(!courses.length) h+='<div class="a3-empty">No live or submitted exams yet.</div>';
+    courses.forEach(function(c,i){
+      h+='<div class="a3-tr a3-main"><span><button class="aa-link" onclick="app.admin.aaDetails('+i+')">'+E(c.code)+'</button></span>'+
+         '<span>'+E(c.level)+'</span>'+
+         '<span><button class="aa-link" onclick="app.admin.aaStudents('+i+')">'+N(c.active)+'</button></span>'+
+         '<span><button class="aa-link" onclick="app.admin.aaSubs('+i+')">'+N(c.submitted)+'</button></span></div>';
+    });
+    put(h+'</div>');
+  }catch(e){ put('<div class="a3-empty">Could not load attempts.</div>'); err(e); }
+};
+
+app.admin.aaDetails=async function(i){
+  var c=courses[i]; if(!c) return; cur=c;
+  put('<div class="a3-empty">Loading...</div>');
+  var slots=[];
+  try{ slots=(await app.api.rpc('admin_slot_summary',{p_exam_id:c.exam_id}))||[]; }catch(e){ err(e); }
+  var now=Date.now();
+  var stat=N(c.active)>0?'Active':'Idle';
+  var info=[['Course code',c.code],['Full title',c.title],['Academic level',c.level],
+    ['Examination duration',c.duration_seconds?Math.round(c.duration_seconds/60)+' mins':'-'],
+    ['Examination status',stat],['Examination date','-'],['Registered candidates','-'],
+    ['Active candidates',N(c.active)],['Submitted candidates',N(c.submitted)]];
+  var grid=info.map(function(x){return '<div><div class="a3-k">'+E(x[0])+'</div><div class="a3-v">'+E(x[1])+'</div></div>';}).join('');
+  var slotH=slots.length?slots.map(function(s){
+    var st='Time not set', tt='Time not set';
+    if(s.starts_at&&s.ends_at){
+      var a=new Date(s.starts_at).getTime(), b=new Date(s.ends_at).getTime();
+      tt=tm(s.starts_at)+' – '+tm(s.ends_at);
+      st=now<a?'Upcoming':(now<=b?'Active':'Closed');
+    }
+    return '<div class="a3-item"><div class="a3-row2"><b>'+E(s.label)+'</b><span class="a3-tag'+(st==='Active'?'':' mu')+'">'+st+'</span></div>'+
+      '<div class="a3-line">'+E(tt)+'</div><div class="a3-line">'+N(s.assigned)+' assigned</div></div>';
+  }).join(''):'<div class="a3-empty">No time slots for this course.</div>';
+  var batchH=slots.length?slots.map(function(s){
+    var a=N(s.assigned), ac=N(s.active), sb=N(s.submitted);
+    var bs=ac>0?'In progress':(a===0?'No candidates':(sb>=a?'Completed':'Not started'));
+    return '<div class="a3-item"><div class="a3-row2"><b>'+E(s.label)+'</b><span class="a3-tag'+(ac>0?'':' mu')+'">'+bs+'</span></div>'+
+      '<div class="a3-line">Assigned '+a+' · Active '+ac+' · Submitted '+sb+'</div>'+
+      '<div class="a3-line">Not submitted: <b>'+Math.max(0,a-sb)+'</b></div></div>';
+  }).join(''):'<div class="a3-empty">No batches for this course.</div>';
+  put(head('Course details', c.code, (c.title||'')+' — Level '+c.level+' • Active Examination Management')+
+    '<span class="a3-pill">Status: '+stat+'</span>'+
+    '<div class="a3-card"><h3>Course Information</h3><div class="a3-grid">'+grid+'</div></div>'+
+    '<div class="a3-card"><h3>Time Slots</h3>'+slotH+'</div>'+
+    '<div class="a3-card"><h3>Batches</h3>'+batchH+'</div>'+
+    '<div class="a3-card"><button class="a3-stop" onclick="app.admin.aaStopAll()">STOP ALL ATTEMPTS</button></div>');
+};
+
+app.admin.aaStopAll=function(){
+  if(!cur) return;
+  var c=cur;
+  app.ui.confirmModal('Stop all attempts?',
+    'This closes every active and paused attempt in '+c.code+' for all candidates. Answers are saved and scored. This cannot be undone.',
+    async function(){
+      try{
+        var r=await app.api.rpc('admin_stop_all_attempts',{p_exam_id:c.exam_id});
+        app.ui.toast('Closed '+N(r&&r.stopped)+' attempt(s).');
+        var idx=courses.indexOf(c);
+        if(idx>=0) app.admin.aaDetails(idx); else app.admin.aaCourses();
+      }catch(e){ err(e); }
+    });
+};
+
+async function loadStudents(){
+  var c=cur; if(!c) return;
+  put(head('', 'ACTIVE STUDENTS', c.code+' — '+N(c.active)+' Candidates')+
+    '<input class="a3-search" placeholder="Search by name or username" value="'+E(q)+'" oninput="app.admin.aaFilter(this.value)">'+
+    '<div id="a3-stu"><div class="a3-empty">Loading...</div></div>');
+  try{
+    students=(await app.api.rpc('admin_active_students',{p_exam_id:c.exam_id}))||[];
+    drawStudents();
+  }catch(e){
+    var b=document.getElementById('a3-stu'); if(b) b.innerHTML='<div class="a3-empty">Could not load students.</div>';
+    err(e);
+  }
+}
+
+function drawStudents(){
+  var b=document.getElementById('a3-stu'); if(!b) return;
+  if(!students.length){ b.innerHTML='<div class="a3-empty">No active students right now.</div>'; return; }
+  var t=String(q||'').toLowerCase();
+  var list=students.filter(function(s){
+    if(!t) return true;
+    return String(s.full_name||'').toLowerCase().indexOf(t)>=0 || String(s.username||'').toLowerCase().indexOf(t)>=0;
+  });
+  if(!list.length){ b.innerHTML='<div class="a3-empty">No matches.</div>'; return; }
+  var h='<div class="a3-tbl"><div class="a3-th a3-stu"><span>Name</span><span>Username</span><span>Status</span><span>Action</span></div>';
+  list.forEach(function(s){
+    var p=s.status==='paused';
+    h+='<div class="a3-tr a3-stu"><span class="a3-nm">'+E(s.full_name)+'</span><span>'+E(s.username)+'</span>'+
+       '<span><span class="a3-st'+(p?' p':'')+'">'+(p?'Paused':'Active')+'</span></span>'+
+       '<span><button class="a3-ic'+(p?' on':'')+'" aria-label="'+(p?'Resume attempt':'Pause attempt')+'" onclick="app.admin.aaToggle(\''+E(s.session_id)+'\')">'+(p?ICON_PLAY:ICON_PAUSE)+'</button></span></div>';
+  });
+  b.innerHTML=h+'</div>';
+}
+
+app.admin.aaStudents=async function(i){ var c=courses[i]; if(!c) return; cur=c; q=''; await loadStudents(); };
+app.admin.aaFilter=function(v){ q=String(v||''); drawStudents(); };
+
+app.admin.aaToggle=function(id){
+  var s=students.filter(function(x){return String(x.session_id)===String(id);})[0];
+  if(!s) return;
+  var paused=s.status==='paused';
+  var go=async function(){
+    try{
+      await app.api.rpc(paused?'admin_resume_attempt':'admin_pause_attempt',{p_session_id:s.session_id});
+      app.ui.toast(paused?'Attempt resumed.':'Attempt paused.');
+      loadStudents();
+    }catch(e){ err(e); }
+  };
+  if(paused){ go(); return; }
+  app.ui.confirmModal('Pause attempt?', String(s.full_name||'This candidate')+' will not be able to answer until you resume the attempt. The timer stops.', go);
+};
+
+app.admin.aaSubs=async function(i){
+  var c=courses[i]; if(!c) return; cur=c;
+  put(head('', 'SUBMISSIONS', c.code+' — '+N(c.submitted)+' Submissions')+'<div id="a3-sub"><div class="a3-empty">Loading...</div></div>');
+  try{
+    var rows=(await app.api.rpc('admin_submissions',{p_exam_id:c.exam_id}))||[];
+    var b=document.getElementById('a3-sub'); if(!b) return;
+    if(!rows.length){ b.innerHTML='<div class="a3-empty">No submissions yet.</div>'; return; }
+    var h='<div class="a3-tbl"><div class="a3-th a3-sbm"><span>Name</span><span>Username</span><span>Time used</span></div>';
+    rows.forEach(function(r){
+      h+='<div class="a3-tr a3-sbm"><div><div class="a3-nm">'+E(r.full_name)+'</div>'+
+         '<div class="a3-line">Start: '+E(tm(r.started_at))+' · Submitted: '+E(tm(r.submitted_at))+'</div></div>'+
+         '<span>'+E(r.username)+'</span><span class="a3-nm">'+E(dur(r.time_used_seconds))+'</span></div>';
+    });
+    b.innerHTML=h+'</div>';
+  }catch(e){
+    var b2=document.getElementById('a3-sub'); if(b2) b2.innerHTML='<div class="a3-empty">Could not load submissions.</div>';
+    err(e);
+  }
+};
+})();
+</script>
+<script id="a4js">/*a4*/
+(function(){
+  function banner(msg){
+    var b = document.getElementById('a4-banner');
+    if(!b){
+      var v = document.getElementById('view-exam'); if(!v) return;
+      b = document.createElement('div'); b.id = 'a4-banner';
+      b.style.cssText = 'margin:10px;padding:14px 16px;border-radius:14px;border:1px solid #E0E1E6;background:#fff;color:#1e293b;font-size:15px;font-weight:600;text-align:center;';
+      v.insertBefore(b, v.firstChild);
+    }
+    b.textContent = msg || ''; b.style.display = msg ? 'block' : 'none';
+  }
+  function lock(on){
+    var opts = document.getElementById('ex-options');
+    if(opts) opts.querySelectorAll('input,textarea,select,button').forEach(function(x){ x.disabled = on; });
+    ['btn-ex-prev','btn-ex-next','btn-ex-flag'].forEach(function(id){ var x = document.getElementById(id); if(x) x.disabled = on; });
+  }
+
+  // Block answer saves and navigation while locked
+  var oRender = app.exam.renderQ;
+  app.exam.renderQ = function(i){ oRender.apply(this, arguments); if(state.exam && state.exam.locked) lock(true); };
+  var oSave = app.exam.saveAns;
+  app.exam.saveAns = function(){ if(state.exam && state.exam.locked) return; return oSave.apply(this, arguments); };
+
+  // Mark the attempt as finished when the candidate submits, so the poll stops
+  var oSubmit = app.exam.submit;
+  app.exam.submit = function(){ if(state.exam) state.exam.done = true; return oSubmit.apply(this, arguments); };
+
+  async function poll(){
+    var v = document.getElementById('view-exam');
+    if(!v || v.offsetParent === null) return;
+    if(!state.exam || !state.exam.session || state.exam.done) return;
+    var r;
+    try { r = await app.api.rpc('attempt_status', { p_attempt_id: state.exam.session.id }); } catch(e) { return; }
+    if(!r || !state.exam || state.exam.done) return;
+    var ends = new Date(r.ends_at).getTime();
+
+    if(r.status === 'in_progress'){
+      if(state.exam.locked){
+        state.exam.locked = false;
+        state.exam.session.ends_at = r.ends_at;
+        banner('');
+        app.exam.renderQ(state.exam.cur);
+        app.exam.startTimer();
+      }
+      return;
+    }
+    if(r.status === 'paused'){
+      if(!state.exam.locked){
+        state.exam.locked = true;
+        clearInterval(app.exam.timerInt);
+        banner('This attempt is paused. Return and check back in 5 to 10 minutes.');
+        lock(true);
+      }
+      return;
+    }
+    // graded, submitted or otherwise closed
+    state.exam.done = true;
+    state.exam.locked = true;
+    clearInterval(app.exam.timerInt);
+    banner(Date.now() >= ends ? 'Time Up!' : 'This attempt is closed 🔒');
+    lock(true);
+  }
+
+  setInterval(poll, 4000);
+})();
+</script>
+<style id="a5">/*a5*/
+:root{--a5-bg:#f6f6f7;--a5-card:#ffffff;--a5-ln:#E4E6EB;--a5-tx:#111827;--a5-mu:#6b7280;--a5-gr:#3d5a4c;--a5-pl:#e6efe8;--a5-red:#dc2626;--a5-fill:#eeeef0;}
+@media (prefers-color-scheme: dark){:root{--a5-bg:#101010;--a5-card:#161616;--a5-ln:#2a2a2a;--a5-tx:#f5f5f5;--a5-mu:#9a9a9a;--a5-gr:#a7d9b8;--a5-pl:#1d3026;--a5-red:#f87171;--a5-fill:#1f1f1f;}}
+#a5{position:fixed;inset:0;z-index:99990;background:var(--a5-bg);color:var(--a5-tx);overflow-y:auto;-webkit-overflow-scrolling:touch;}
+#a5 *{box-sizing:border-box;}
+.a5-top{display:flex;justify-content:space-between;align-items:center;padding:20px 22px 0;}
+.a5-round{width:52px;height:52px;border-radius:50%;border:0;background:var(--a5-fill);color:var(--a5-tx);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.a5-pill{display:flex;align-items:center;height:52px;padding:0 6px;border-radius:999px;background:var(--a5-fill);color:var(--a5-tx);}
+.a5-pill span{display:flex;align-items:center;justify-content:center;width:42px;height:42px;}
+.a5-hdr{display:flex;align-items:center;gap:18px;padding:24px 22px 20px;border-bottom:1px solid var(--a5-ln);margin-top:14px;}
+.a5-ham{width:48px;height:48px;border:0;background:transparent;color:var(--a5-tx);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;}
+.a5-app{font-size:22px;font-weight:700;margin:0;}
+.a5-body{padding:26px 22px 60px;max-width:720px;margin:0 auto;}
+.a5-back{display:flex;align-items:center;gap:12px;background:none;border:0;color:var(--a5-tx);font-size:17px;font-weight:600;padding:4px 0;cursor:pointer;margin-bottom:34px;}
+.a5-eye{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--a5-mu);font-weight:600;}
+.a5-h{font-size:40px;font-weight:800;margin:6px 0;overflow-wrap:anywhere;line-height:1.1;}
+.a5-sub{font-size:17px;color:var(--a5-mu);margin:0 0 18px;line-height:1.4;}
+.a5-pill-st{display:inline-block;padding:10px 20px;border-radius:999px;background:var(--a5-pl);color:var(--a5-gr);font-size:16px;font-weight:600;margin-bottom:26px;}
+.a5-card{background:var(--a5-card);border:1px solid var(--a5-ln);border-radius:26px;padding:26px 24px;margin-bottom:22px;}
+.a5-card h3{font-size:22px;font-weight:700;margin:0 0 24px;}
+.a5-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px 18px;}
+.a5-k{font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:var(--a5-mu);margin-bottom:8px;}
+.a5-v{font-size:21px;font-weight:600;overflow-wrap:anywhere;}
+.a5-item{border:1px solid var(--a5-ln);border-radius:20px;padding:20px;margin-bottom:16px;}
+.a5-item:last-child{margin-bottom:0;}
+.a5-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.a5-it{font-size:22px;font-weight:700;}
+.a5-tag{font-size:15px;font-weight:600;color:var(--a5-gr);white-space:nowrap;}
+.a5-tag.mu{color:var(--a5-mu);}
+.a5-time{display:flex;align-items:center;gap:12px;font-size:19px;margin:18px 0 10px;}
+.a5-line{font-size:17px;color:var(--a5-mu);margin-top:8px;line-height:1.4;}
+.a5-stop{width:100%;height:60px;border-radius:18px;border:1.5px solid var(--a5-red);background:transparent;color:var(--a5-red);font-size:17px;font-weight:700;letter-spacing:.04em;cursor:pointer;}
+.a5-search{display:flex;align-items:center;gap:12px;height:58px;border:1px solid var(--a5-ln);border-radius:18px;background:var(--a5-card);padding:0 18px;margin-bottom:18px;}
+.a5-search input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--a5-tx);font-size:17px;}
+.a5-tbl{background:var(--a5-card);border:1px solid var(--a5-ln);border-radius:26px;overflow:hidden;}
+.a5-th,.a5-tr{display:grid;align-items:center;gap:10px;padding:18px;border-bottom:1px solid var(--a5-ln);font-size:17px;}
+.a5-th{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--a5-mu);font-weight:600;}
+.a5-tr:last-child{border-bottom:0;}
+.a5-cols4{grid-template-columns:1.2fr .8fr 1.1fr 1fr;}
+.a5-cols-s{grid-template-columns:1.6fr 1fr .9fr 84px;}
+.a5-cols-b{grid-template-columns:1.5fr 1fr 1.3fr;}
+.a5-nm{font-weight:600;overflow-wrap:anywhere;}
+.a5-un{overflow-wrap:anywhere;}
+.a5-st{display:inline-block;font-size:14px;font-weight:600;padding:5px 12px;border-radius:999px;background:var(--a5-pl);color:var(--a5-gr);}
+.a5-st.p{background:transparent;border:1px solid var(--a5-mu);color:var(--a5-mu);}
+.a5-ic{width:60px;height:50px;border-radius:14px;border:1px solid var(--a5-ln);background:var(--a5-card);color:var(--a5-tx);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.a5-ic.on{background:var(--a5-gr);border-color:var(--a5-gr);color:var(--a5-bg);}
+.a5-link{background:none;border:0;padding:0;font:inherit;font-weight:600;color:var(--a5-tx);text-decoration:underline;text-underline-offset:4px;cursor:pointer;}
+.a5-empty{padding:30px 12px;text-align:center;color:var(--a5-mu);font-size:16px;}
+@media (max-width:480px){
+  .a5-h{font-size:34px;}
+  .a5-grid{gap:24px 12px;}
+  .a5-v{font-size:18px;}
+  .a5-card{padding:20px 16px;}
+  .a5-body{padding:22px 16px 50px;}
+  .a5-cols-s{grid-template-columns:1.4fr 1fr 80px 64px;gap:6px;padding:14px 4px;font-size:15px;}
+  .a5-cols-b{grid-template-columns:1.2fr 1fr 1.3fr;gap:6px;padding:14px 4px;font-size:15px;}
+  .a5-cols4{gap:6px;padding:14px 12px;font-size:15px;}
+}
+
+</style>
+<script id="a5js">
+(function(){
+var ICON_X='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+var ICON_DOTS='<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>';
+var ICON_SEND='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><polygon points="22 2 2 10 11 13 14 22 22 2"/></svg>';
+var ICON_HAM='<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+var ICON_BACK='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>';
+var ICON_SEARCH='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+var ICON_CLOCK='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+var ICON_PAUSE='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+var ICON_PLAY='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><polygon points="7 5 19 12 7 19 7 5"/></svg>';
+
+var courses=[],cur=null,students=[],q='';
+function E(s){return app.ui.esc(s==null?'':String(s));}
+function N(x){return Number(x)||0;}
+function tm(v){var d=v?new Date(v):null;return d&&!isNaN(d)?d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'';}
+function dur(s){s=Math.max(0,Math.round(Number(s)||0));return Math.floor(s/60)+'m '+(s%60)+'s';}
+function err(e){app.ui.toast((e&&e.message)||'Something went wrong.',true);}
+function ensure(){var o=document.getElementById('a5');if(!o){o=document.createElement('div');o.id='a5';document.body.appendChild(o);}return o;}
+function topbar(){
+  return '<div class="a5-top"><button class="a5-round" aria-label="Close" onclick="app.admin.a5Close()">'+ICON_X+'</button>'+
+    '<div class="a5-pill"><span>'+ICON_DOTS+'</span><span>'+ICON_SEND+'</span></div></div>'+
+    '<div class="a5-hdr"><button class="a5-ham" aria-label="Menu">'+ICON_HAM+'</button><h1 class="a5-app">Results &amp; Attempts</h1></div>';
+}
+function openPage(inner){
+  var o=ensure();
+  o.innerHTML=topbar()+'<div class="a5-body">'+inner+'</div>';
+  o.style.display='block'; o.scrollTop=0; document.body.style.overflow='hidden';
+}
+function head(eye,t,sub){
+  return '<button class="a5-back" onclick="app.admin.a5Close()">'+ICON_BACK+'<span>Back to Active Attempts</span></button>'+
+    (eye?'<div class="a5-eye">'+E(eye)+'</div>':'')+'<h2 class="a5-h">'+E(t)+'</h2>'+(sub?'<p class="a5-sub">'+E(sub)+'</p>':'');
+}
+app.admin.a5Close=function(){
+  var o=document.getElementById('a5');
+  if(o){o.style.display='none';o.innerHTML='';}
+  document.body.style.overflow='';
+  app.admin.aaCourses();
+};
+
+async function fetchCourses(){
+  var all=(await app.api.rpc('admin_course_counts'))||[];
+  var lf=(typeof state!=='undefined'&&state.adminResLevelFilter)||'ALL';
+  courses=all.filter(function(c){return lf==='ALL'||String(c.level)===String(lf);});
+  return courses;
+}
+app.admin.aaCourses=async function(){
+  cur=null;
+  var box=document.getElementById('adm-res-att'); if(!box) return;
+  box.innerHTML='<div class="a5-tbl"><div class="a5-empty">Loading...</div></div>';
+  try{
+    await fetchCourses();
+    var h='<div class="a5-tbl"><div class="a5-th a5-cols4"><span>Course</span><span>Level</span><span>Active Students</span><span>Submitted</span></div>';
+    if(!courses.length) h+='<div class="a5-empty">No live or submitted exams yet.</div>';
+    courses.forEach(function(c,i){
+      h+='<div class="a5-tr a5-cols4"><span><button class="a5-link" onclick="app.admin.aaDetails('+i+')">'+E(c.code)+'</button></span>'+
+         '<span>'+E(c.level)+'</span>'+
+         '<span><button class="a5-link" onclick="app.admin.aaStudents('+i+')">'+N(c.active)+'</button></span>'+
+         '<span><button class="a5-link" onclick="app.admin.aaSubs('+i+')">'+N(c.submitted)+'</button></span></div>';
+    });
+    box.innerHTML=h+'</div>';
+  }catch(e){
+    box.innerHTML='<div class="a5-tbl"><div class="a5-empty">Could not load attempts.</div></div>';
+    err(e);
+  }
+};
+app.admin.loadAttempts=function(){return app.admin.aaCourses();};
+app.admin.aaDetails=async function(i){
+  var c=courses[i]; if(!c) return; cur=c;
+  openPage('<div class="a5-empty">Loading...</div>');
+  var slots=[];
+  try{slots=(await app.api.rpc('admin_slot_summary',{p_exam_id:c.exam_id}))||[];}catch(e){err(e);}
+  var now=Date.now(), active=N(c.active), stat=active>0?'Active':'Idle';
+  var info=[['Course code',c.code],['Full title',c.title||'-'],['Academic level',c.level],
+    ['Examination duration',c.duration_seconds?Math.round(c.duration_seconds/60)+' mins':'-'],
+    ['Examination status',stat],['Examination date','-'],['Registered candidates','-'],
+    ['Active candidates',active],['Submitted candidates',N(c.submitted)]];
+  var grid=info.map(function(x){return '<div><div class="a5-k">'+E(x[0])+'</div><div class="a5-v">'+E(x[1])+'</div></div>';}).join('');
+  var slotH=slots.length?slots.map(function(s){
+    var st='Time not set', tt='Time not set', cls=' mu';
+    if(s.starts_at&&s.ends_at){
+      var a=new Date(s.starts_at).getTime(), b=new Date(s.ends_at).getTime();
+      tt=tm(s.starts_at)+' – '+tm(s.ends_at);
+      st=now<a?'Upcoming':(now<=b?'Active':'Closed');
+      if(st==='Active') cls='';
+    }
+    return '<div class="a5-item"><div class="a5-row"><b class="a5-it">'+E(s.label)+'</b><span class="a5-tag'+cls+'">'+st+'</span></div>'+
+      '<div class="a5-time">'+ICON_CLOCK+'<span>'+E(tt)+'</span></div><div class="a5-line">'+N(s.assigned)+' assigned</div></div>';
+  }).join(''):'<div class="a5-empty">No time slots for this course.</div>';
+  var batchH=slots.length?slots.map(function(s){
+    var a=N(s.assigned), ac=N(s.active), sb=N(s.submitted);
+    var bs=ac>0?'In progress':(a>0&&sb>=a?'Completed':'Not started');
+    var tt=s.starts_at&&s.ends_at?tm(s.starts_at)+' – '+tm(s.ends_at):'Time not set';
+    return '<div class="a5-item"><div class="a5-row"><b class="a5-it">'+E(s.label)+'</b><span class="a5-tag'+(ac>0?'':' mu')+'">'+bs+'</span></div>'+
+      '<div class="a5-time">'+ICON_CLOCK+'<span>'+E(tt)+'</span></div>'+
+      '<div class="a5-line">Assigned '+a+' · Active '+ac+' · Submitted '+sb+'</div>'+
+      '<div class="a5-line">Not submitted: <b>'+Math.max(0,a-sb)+'</b></div></div>';
+  }).join(''):'<div class="a5-empty">No batches for this course.</div>';
+  openPage(head('COURSE DETAILS', c.code, (c.title||'')+' — Level '+c.level+' • Active Examination Management')+
+    '<span class="a5-pill-st">Status: '+stat+'</span>'+
+    '<div class="a5-card"><h3>Course Information</h3><div class="a5-grid">'+grid+'</div></div>'+
+    '<div class="a5-card"><h3>Time Slots</h3>'+slotH+'</div>'+
+    '<div class="a5-card"><h3>Batches</h3>'+batchH+'</div>'+
+    '<button class="a5-stop" onclick="app.admin.aaStopAll()">STOP ALL ATTEMPTS</button>');
+};
+
+app.admin.aaStopAll=function(){
+  var c=cur; if(!c) return;
+  app.ui.confirmModal('Stop all attempts?',
+    'This closes every active and paused attempt in '+c.code+' for all candidates. Answers are saved and scored. This cannot be undone.',
+    async function(){
+      try{
+        var r=await app.api.rpc('admin_stop_all_attempts',{p_exam_id:c.exam_id});
+        app.ui.toast('Closed '+N(r&&r.stopped)+' attempt(s).');
+        await fetchCourses();
+        var idx=courses.findIndex(function(x){return String(x.exam_id)===String(c.exam_id);});
+        if(idx>=0) app.admin.aaDetails(idx); else app.admin.a5Close();
+      }catch(e){err(e);}
+    });
+};
+app.admin.aaStudents=async function(i){
+  var c=courses[i]; if(!c) return; cur=c; q='';
+  openPage(head('', 'Active Students', c.code+' — '+N(c.active)+' Candidates')+
+    '<div class="a5-card"><div class="a5-search">'+ICON_SEARCH+
+    '<input id="a5-q" placeholder="Search by name or username" value="'+E(q)+'" oninput="app.admin.a5Filter(this.value)"></div>'+
+    '<div id="a5-stu"><div class="a5-empty">Loading...</div></div></div>');
+  await loadStudents();
+};
+async function loadStudents(){
+  var c=cur; if(!c) return;
+  var b=document.getElementById('a5-stu');
+  try{
+    students=(await app.api.rpc('admin_active_students',{p_exam_id:c.exam_id}))||[];
+    drawStudents();
+  }catch(e){
+    if(b) b.innerHTML='<div class="a5-empty">Could not load students.</div>';
+    err(e);
+  }
+}
+function drawStudents(){
+  var b=document.getElementById('a5-stu'); if(!b) return;
+  if(!students.length){ b.innerHTML='<div class="a5-empty">No active students right now.</div>'; return; }
+  var t=String(q||'').toLowerCase();
+  var list=students.filter(function(s){
+    if(!t) return true;
+    return String(s.full_name||'').toLowerCase().indexOf(t)>=0 || String(s.username||'').toLowerCase().indexOf(t)>=0;
+  });
+  if(!list.length){ b.innerHTML='<div class="a5-empty">No matches.</div>'; return; }
+  var h='<div class="a5-th a5-cols-s"><span>Name</span><span>Username</span><span>Status</span><span>Action</span></div>';
+  list.forEach(function(s){
+    var p=s.status==='paused';
+    h+='<div class="a5-tr a5-cols-s"><span class="a5-nm">'+E(s.full_name)+'</span><span class="a5-un">'+E(s.username)+'</span>'+
+       '<span><span class="a5-st'+(p?' p':'')+'">'+(p?'Paused':'Active')+'</span></span>'+
+       '<span><button class="a5-ic'+(p?' on':'')+'" aria-label="'+(p?'Resume attempt':'Pause attempt')+'" onclick="app.admin.a5Toggle(\''+E(s.session_id)+'\')">'+(p?ICON_PLAY:ICON_PAUSE)+'</button></span></div>';
+  });
+  b.innerHTML='<div class="a5-list">'+h+'</div>';
+}
+app.admin.a5Filter=function(v){ q=String(v||''); drawStudents(); };
+app.admin.a5Toggle=function(id){
+  var s=students.filter(function(x){return String(x.session_id)===String(id);})[0];
+  if(!s) return;
+  var paused=s.status==='paused';
+  var go=async function(){
+    try{
+      await app.api.rpc(paused?'admin_resume_attempt':'admin_pause_attempt',{p_session_id:s.session_id});
+      app.ui.toast(paused?'Attempt resumed.':'Attempt paused.');
+      await loadStudents();
+    }catch(e){ err(e); }
+  };
+  if(paused){ go(); return; }
+  app.ui.confirmModal('Pause attempt?', String(s.full_name||'This candidate')+' cannot answer until the attempt is resumed. The timer stops.', go);
+};
+app.admin.aaSubs=async function(i){
+  var c=courses[i]; if(!c) return; cur=c;
+  openPage(head('', 'Submissions', c.code+' — '+N(c.submitted)+' Submissions')+
+    '<div class="a5-card"><div id="a5-sub"><div class="a5-empty">Loading...</div></div></div>');
+  var b=document.getElementById('a5-sub');
+  try{
+    var rows=(await app.api.rpc('admin_submissions',{p_exam_id:c.exam_id}))||[];
+    if(!rows.length){ b.innerHTML='<div class="a5-empty">No submissions yet.</div>'; return; }
+    var h='<div class="a5-th a5-cols-b"><span>Name</span><span>Username</span><span>Time used</span></div>';
+    rows.forEach(function(r){
+      h+='<div class="a5-tr a5-cols-b"><span class="a5-nm">'+E(r.full_name)+'</span><span class="a5-un">'+E(r.username)+'</span>'+
+         '<div><div class="a5-nm">'+E(dur(r.time_used_seconds))+'</div>'+
+         '<div class="a5-line">Start: '+E(tm(r.started_at))+' · Submitted: '+E(tm(r.submitted_at))+'</div></div></div>';
+    });
+    b.innerHTML='<div class="a5-list">'+h+'</div>';
+  }catch(e){
+    b.innerHTML='<div class="a5-empty">Could not load submissions.</div>';
+    err(e);
+  }
+};
+})();
+
+</script>
+<style id="fix1">.a5-tbl,.a5-tbl table{text-align:left}.a5-tbl th,.a5-tbl td{text-align:left!important;vertical-align:top;white-space:normal!important;overflow:visible!important}.a5-time-sub{white-space:normal!important;display:block}</style>
+<script id="fix1js">(function(){function pad(n){return(n<10?"0":"")+n}function fmt(d){var h=d.getHours()%12||12,m=pad(d.getMinutes()),ap=d.getHours()<12?"AM":"PM";return h+":"+m+" "+ap}function parseStart(t){var m=/Start:\s*(\d{1,2}):(\d{2})\s*(AM|PM)/i.exec(t||"");if(!m)return null;var h=parseInt(m[1],10),mi=parseInt(m[2],10);if(/PM/i.test(m[3])&&h!==12)h+=12;if(/AM/i.test(m[3])&&h===12)h=0;var d=new Date();d.setHours(h,mi,0,0);return d}function parseDur(t){var m=/(\d+)m\s*(\d+)s/.exec(t||"");if(!m)return 0;return parseInt(m[1],10)*60+parseInt(m[2],10)}function fix(){document.querySelectorAll("*").forEach(function(el){if(el.children.length===0){var t=el.textContent||"";if(t.indexOf("Preview uses")>-1||t.indexOf("Light / Dark preview")>-1){el.style.display="none"}}});document.querySelectorAll("tr").forEach(function(tr){if((tr.textContent||"").indexOf("ADV 111")>-1){tr.remove()}});document.querySelectorAll("td").forEach(function(td){var txt=td.textContent||"";if(txt.indexOf("Start:")>-1&&(txt.indexOf("Submitt")>-1||txt.indexOf("Submitted:")<0)){var s=parseStart(txt);var dur=parseDur(td.parentElement?td.parentElement.textContent:"");if(s){var e=new Date(s.getTime()+dur*1000);var d=document.createElement("div");d.className="a5-time-sub";d.textContent="Start: "+fmt(s)+" \u00b7 Submitted: "+fmt(e);td.appendChild(d)}}})}document.addEventListener("DOMContentLoaded",fix);new MutationObserver(fix).observe(document.documentElement,{childList:true,subtree:true})})();</script>
+
+<style id="a7">
+:root{--a7-page:#F2F2F2;--a7-card:#FFFFFF;--a7-text:#111111;--a7-muted:#757575;--a7-border:#ECECEC;--a7-gbg:#E7F3E7;--a7-gt:#2E7D32;--a7-circle:#E8E8E8;--a7-pill:#EDEDED;--a7-input:#FFFFFF;--a7-pb:#9E9E9E;--a7-red:#C62828;--a7-sh:0 1px 2px rgba(0,0,0,.04)}
+@media (prefers-color-scheme:dark){:root{--a7-page:#121212;--a7-card:#1E1E1E;--a7-text:#FFFFFF;--a7-muted:#A8A8A8;--a7-border:#2B2B2B;--a7-gbg:#1E3320;--a7-gt:#7ED491;--a7-circle:#2E2E2E;--a7-pill:#2A2A2A;--a7-input:#1E1E1E;--a7-pb:#777777;--a7-red:#FF6B6B;--a7-sh:0 1px 2px rgba(0,0,0,.35)}}
+#a7layer{position:fixed;inset:0;z-index:99990;display:flex;flex-direction:column;background:var(--a7-page);color:var(--a7-text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;letter-spacing:-.01em;box-sizing:border-box}
+#a7layer *,.a7card *{box-sizing:border-box}
+#a7layer button,.a7card button{font-family:inherit;cursor:pointer}
+.a7hd{padding:12px 16px 0;flex-shrink:0}
+.a7r1{display:flex;align-items:center;justify-content:space-between}
+.a7x{width:48px;height:48px;border-radius:50%;background:var(--a7-circle);border:none;display:flex;align-items:center;justify-content:center;color:#000}
+.a7pl{width:110px;height:40px;border-radius:999px;background:var(--a7-pill);border:none;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--a7-text)}
+.a7dot{width:5px;height:5px;border-radius:50%;background:var(--a7-text)}
+.a7r2{display:flex;align-items:center;gap:10px;padding:18px 0 14px;border-bottom:1px solid var(--a7-border)}
+.a7r2 h1{font-size:22px;font-weight:800;letter-spacing:-.03em;margin:0;line-height:1.1}
+.a7main{flex:1;overflow-y:auto;overflow-x:clip;padding:0 16px 24px}
+.a7in{max-width:720px;margin:0 auto;width:100%}
+.a7card{background:var(--a7-card);border:1px solid var(--a7-border);box-shadow:var(--a7-sh)}
+.a7tw{border-radius:20px;overflow:hidden;margin-top:16px}
+.a7tb{width:100%;border-collapse:collapse;text-align:left}
+.a7tb.fx{table-layout:fixed}
+.a7tb th{font-size:12px;letter-spacing:.06em;color:var(--a7-muted);font-weight:700;padding:15px 16px;text-align:left;overflow-wrap:anywhere;vertical-align:top;background:transparent}
+.a7tb td{padding:16px;font-size:16px;text-align:left;overflow-wrap:anywhere;vertical-align:top;border-top:1px solid var(--a7-border);background:transparent;color:var(--a7-text)}
+.a7tb thead th{border-bottom:1px solid var(--a7-border)}
+.a7lk{background:none;border:none;color:var(--a7-text);font-weight:800;font-size:16px;padding:0;text-decoration:underline;text-underline-offset:3px;text-align:left}
+.a7bk{display:flex;align-items:center;gap:8px;background:none;border:none;color:var(--a7-text);font-size:15px;font-weight:700;padding:18px 0 6px}
+.a7ey{color:var(--a7-muted);font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin:16px 0 8px}
+.a7h2{font-size:36px;font-weight:900;letter-spacing:-.04em;margin:0 0 8px;line-height:1}
+.a7h2s{font-size:28px;font-weight:900;letter-spacing:-.03em;text-transform:uppercase;margin:16px 0 6px;line-height:1.1}
+.a7sub{color:var(--a7-muted);font-size:15px;margin:0 0 16px;line-height:1.45}
+.a7st{display:inline-block;background:var(--a7-gbg);color:var(--a7-gt);font-size:14px;font-weight:700;padding:8px 14px;border-radius:999px}
+.a7st.off{background:var(--a7-pill);color:var(--a7-muted)}
+.a7bx{border-radius:24px;padding:24px;margin-top:16px}
+.a7bx h3{font-size:20px;font-weight:800;margin:0 0 18px;letter-spacing:-.02em}
+.a7gr{display:grid;grid-template-columns:1fr 1fr;column-gap:16px;row-gap:24px}
+.a7gr .k{color:var(--a7-muted);font-size:12px;font-weight:700;letter-spacing:.06em;margin-bottom:6px;overflow-wrap:anywhere;text-transform:uppercase}
+.a7gr .v{font-size:19px;font-weight:800;line-height:1.2;overflow-wrap:anywhere}
+.a7it{border:1px solid var(--a7-border);border-radius:16px;padding:20px;margin-bottom:12px}
+.a7it:last-child{margin-bottom:0}
+.a7ir{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.a7in1{font-size:19px;font-weight:800}
+.a7bn{font-size:16px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.a7tg{background:var(--a7-pill);color:var(--a7-muted);font-size:13px;font-weight:700;padding:6px 12px;border-radius:999px;white-space:nowrap}
+.a7tg.on{background:var(--a7-gbg);color:var(--a7-gt)}
+.a7tx{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:15px;font-weight:600}
+.a7mu{color:var(--a7-muted);font-size:14px;margin-top:10px;line-height:1.5}
+.a7stop{width:100%;margin-top:20px;padding:16px;border-radius:12px;border:1.5px solid var(--a7-red);background:var(--a7-card);color:var(--a7-red);font-size:16px;font-weight:800;letter-spacing:.02em}
+.a7stop:disabled{opacity:.55}
+.a7sr{display:flex;align-items:center;gap:10px;border:1px solid var(--a7-border);background:var(--a7-input);border-radius:12px;padding:13px 14px;color:var(--a7-muted)}
+.a7sr input{border:none;outline:none;background:transparent;color:var(--a7-text);font-size:15px;width:100%;font-family:inherit}
+.a7ac{display:inline-block;background:var(--a7-gbg);color:var(--a7-gt);font-size:13px;font-weight:700;padding:7px 12px;border-radius:999px;white-space:nowrap}
+.a7pa{display:inline-block;border:1px solid var(--a7-pb);color:var(--a7-muted);font-size:13px;font-weight:700;padding:6px 12px;border-radius:999px;white-space:nowrap}
+.a7ab{width:48px;height:48px;border-radius:12px;border:1px solid var(--a7-border);background:var(--a7-card);display:flex;align-items:center;justify-content:center;color:var(--a7-text)}
+.a7ab.rs{border-color:var(--a7-gt);background:var(--a7-gbg);color:var(--a7-gt)}
+.a7em{color:var(--a7-muted);padding:22px 16px;margin:0}
+.a7us{font-size:18px;font-weight:800;line-height:1.2}
+.a7us2{color:var(--a7-muted);font-size:13px;margin-top:4px;line-height:1.35}
+.a7ov{position:fixed;inset:0;z-index:99995;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
+.a7md{background:var(--a7-card);color:var(--a7-text);border-radius:20px;padding:24px;width:100%;max-width:440px;border:1px solid var(--a7-border);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+.a7md h3{font-size:20px;font-weight:800;margin:0 0 10px}
+.a7md p{color:var(--a7-muted);font-size:15px;line-height:1.55;margin:0 0 22px}
+.a7md .bt{display:flex;gap:10px}
+.a7md button{flex:1;padding:13px;border-radius:12px;font-weight:800;font-size:15px;cursor:pointer}
+.a7ts{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;border-radius:999px;font-size:14px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:99999;max-width:calc(100vw - 32px);text-align:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+</style>
+<script id="a7js">
+(function(){
+if(window.__a7)return;window.__a7=1;
+var cur=null,isOpen=false,rows=[];
+function rpc(n,a){if(window.app&&app.api&&app.api.rpc)return app.api.rpc(n,a||{});return window.sbClient.rpc(n,a||{}).then(function(r){if(r.error)throw r.error;return r.data;});}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function arr(d){return Array.isArray(d)?d:[];}
+function num(x){return Number(x)||0;}
+function dur(s){s=Math.max(0,Math.round(num(s)));return Math.floor(s/60)+'m '+(s%60)+'s';}
+function hm(t){if(!t)return '-';var d=new Date(t);return isNaN(d)?'-':d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});}
+function rng(a,b){return (a&&b)?hm(a)+' - '+hm(b):'Time not set';}
+var I={
+x:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>',
+menu:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>',
+send:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>',
+back:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>',
+srch:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>',
+pause:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg>',
+play:'<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg>',
+clock:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16.5 12"/></svg>'
+};
+function toast(m){var o=document.querySelector('.a7ts');if(o)o.remove();var t=document.createElement('div');t.className='a7ts';t.setAttribute('role','status');t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.remove();},2800);}
+function ask(title,text,label,danger,ok){
+ var o=document.createElement('div');o.className='a7ov';
+ o.innerHTML='<div class="a7md" role="dialog" aria-modal="true"><h3>'+esc(title)+'</h3><p>'+esc(text)+'</p><div class="bt"><button type="button" id="a7no" style="border:1px solid var(--a7-border);background:var(--a7-card);color:var(--a7-text)">Cancel</button><button type="button" id="a7yes" style="border:none;background:'+(danger?'var(--a7-red)':'var(--a7-text)')+';color:'+(danger?'#fff':'var(--a7-card)')+'">'+esc(label)+'</button></div></div>';
+ document.body.appendChild(o);
+ o.querySelector('#a7no').onclick=function(){o.remove();};
+ o.querySelector('#a7yes').onclick=function(){var b=this;b.disabled=true;b.textContent='Please wait...';ok(function(){o.remove();});};
+}
+function layer(){
+ var L=document.getElementById('a7layer');
+ if(L)return L;
+ L=document.createElement('div');L.id='a7layer';
+ L.innerHTML='<div class="a7hd"><div class="a7r1"><button type="button" class="a7x" aria-label="Close" onclick="__a7.close()">'+I.x+'</button><button type="button" class="a7pl" aria-label="More actions"><span class="a7dot"></span><span class="a7dot"></span><span class="a7dot"></span>'+I.send+'</button></div><div class="a7r2">'+I.menu+'<h1>Results and Attempts</h1></div></div><div class="a7main"><div class="a7in" id="a7body"></div></div>';
+ document.body.appendChild(L);
+ document.body.style.overflow='hidden';
+ if(!isOpen){isOpen=true;try{history.pushState({a7:1},'');}catch(e){}}
+ return L;
+}
+function hide(){var L=document.getElementById('a7layer');if(L)L.remove();document.body.style.overflow='';isOpen=false;}
+function close(){if(isOpen&&history.state&&history.state.a7){history.back();}else{hide();}}
+window.addEventListener('popstate',function(){if(isOpen)hide();});
+function body(h){layer();var b=document.getElementById('a7body');b.innerHTML=h;var m=b.parentNode;m.scrollTop=0;return b;}
+function bk(){return '<button type="button" class="a7bk" onclick="__a7.close()">'+I.back+' Back to Active Attempts</button>';}
+function fail(e){body(bk()+'<p class="a7em">Could not load. '+esc((e&&e.message)||e)+'</p>');}
+function courses(){return rpc('admin_course_counts').then(function(d){
+ var f=null;try{f=state.adminResLevelFilter;}catch(e){}
+ var a=arr(d);
+ if(f&&String(f).toLowerCase()!=='all'){a=a.filter(function(c){return String(c.level)===String(f);});}
+ return a;});}
+function byId(id){return courses().then(function(a){return a.filter(function(c){return c.exam_id===id;})[0]||null;});}
+
+/* LIST */
+function render(){
+ var el=document.getElementById('adm-res-att');if(!el)return;
+ courses().then(function(a){
+  var h;
+  if(!a.length){h='<div class="a7card a7tw"><p class="a7em">No live or submitted exams yet.</p></div>';}
+  else{
+   h='<div class="a7card a7tw"><table class="a7tb fx"><thead><tr><th>COURSE</th><th>LEVEL</th><th>ACTIVE STUDENTS</th><th>SUBMITTED</th></tr></thead><tbody>';
+   a.forEach(function(c){var id=esc(c.exam_id);
+    h+='<tr><td><button type="button" class="a7lk" onclick="__a7.details(\''+id+'\')">'+esc(c.code)+'</button></td><td style="font-weight:600">'+esc(c.level)+'</td><td><button type="button" class="a7lk" onclick="__a7.students(\''+id+'\')">'+num(c.active)+'</button></td><td><button type="button" class="a7lk" onclick="__a7.subs(\''+id+'\')">'+num(c.submitted)+'</button></td></tr>';});
+   h+='</tbody></table></div>';
+  }
+  el.innerHTML=h;
+ }).catch(function(e){el.innerHTML='<div class="a7card a7tw"><p class="a7em">Could not load. '+esc((e&&e.message)||e)+'</p></div>';});
+}
+
+/* DETAILS */
+function details(id){
+ Promise.all([byId(id),rpc('admin_slot_summary',{p_exam_id:id})]).then(function(r){
+  var c=r[0];if(!c){fail('Course not found');return;}
+  cur=c;var s=arr(r[1]),act=num(c.active);
+  var now=Date.now();
+  var h=bk()+'<p class="a7ey">Course Details</p><h2 class="a7h2">'+esc(c.code)+'</h2><p class="a7sub">'+esc(c.title)+' - Level '+esc(c.level)+' - Active Examination Management</p><span class="a7st'+(act>0?'':' off')+'">Status: '+(act>0?'Active':'Idle')+'</span>';
+  var g=[['Course code',c.code],['Full title',c.title],['Academic level',c.level],['Examination duration',Math.round(num(c.duration_seconds)/60)+' mins'],['Examination status',act>0?'Active':'Idle'],['Examination date','-'],['Registered candidates','-'],['Active candidates',act],['Submitted candidates',num(c.submitted)]];
+  h+='<div class="a7card a7bx"><h3>Course Information</h3><div class="a7gr">';
+  g.forEach(function(x){h+='<div style="min-width:0"><div class="k">'+x[0]+'</div><div class="v">'+esc(x[1])+'</div></div>';});
+  h+='</div></div>';
+  h+='<div class="a7card a7bx"><h3>Time Slots</h3>';
+  if(!s.length)h+='<p class="a7mu" style="margin:0">No slots for this course.</p>';
+  s.forEach(function(x){
+   var t='Time not set',on=false;
+   if(x.starts_at&&x.ends_at){var a=new Date(x.starts_at).getTime(),b=new Date(x.ends_at).getTime();if(now<a)t='Upcoming';else if(now>b)t='Closed';else{t='Active';on=true;}}
+   h+='<div class="a7it"><div class="a7ir"><span class="a7in1">'+esc(x.label)+'</span><span class="a7tg'+(on?' on':'')+'">'+t+'</span></div><div class="a7tx">'+I.clock+' '+esc(rng(x.starts_at,x.ends_at))+'</div><div class="a7mu" style="margin-top:8px">'+num(x.assigned)+' assigned</div></div>';});
+  h+='</div>';
+  h+='<div class="a7card a7bx"><h3>Batches</h3>';
+  if(!s.length)h+='<p class="a7mu" style="margin:0">No batches yet.</p>';
+  s.forEach(function(x){
+   var as=num(x.assigned),ac=num(x.active),sb=num(x.submitted);
+   var t=ac>0?'In progress':(as>0&&sb>=as?'Completed':'Not started');
+   h+='<div class="a7it"><div class="a7ir"><span class="a7bn">'+esc(x.label)+'</span><span style="color:'+(ac>0?'var(--a7-gt)':'var(--a7-muted)')+';font-size:14px;font-weight:800">'+t+'</span></div><div class="a7mu">Assigned '+as+' - Active '+ac+' - Submitted '+sb+'</div><div style="margin-top:10px;font-size:15px">Not submitted: <strong>'+Math.max(0,as-sb)+'</strong></div></div>';});
+  h+='</div>';
+  h+='<button type="button" class="a7stop" id="a7stopall"'+(act>0?'':' disabled')+'>STOP ALL ATTEMPTS</button>';
+  var b=body(h);
+  var sb=document.getElementById('a7stopall');
+  if(sb)sb.onclick=function(){stopAll(c);};
+ }).catch(fail);
+}
+function stopAll(c){
+ ask('Stop all attempts?','This closes every active and paused attempt in '+c.code+' for all candidates. Answers are saved and scored. This cannot be undone.','Confirm',true,function(done){
+  rpc('admin_stop_all_attempts',{p_exam_id:c.exam_id}).then(function(r){
+   done();var n=(r&&r.stopped!=null)?r.stopped:0;toast('Closed '+n+' attempt(s).');details(c.exam_id);render();
+  }).catch(function(e){done();toast('Failed: '+((e&&e.message)||e));});
+ });
+}
+
+/* STUDENTS */
+function students(id){
+ Promise.all([byId(id),rpc('admin_active_students',{p_exam_id:id})]).then(function(r){
+  var c=r[0];if(!c){fail('Course not found');return;}
+  cur=c;rows=arr(r[1]);
+  var h=bk()+'<h2 class="a7h2s">Active Students</h2><p class="a7sub" style="margin-bottom:18px">'+esc(c.code)+' - '+rows.length+' Candidates</p><div class="a7sr">'+I.srch+'<input id="a7q" placeholder="Search by name or username" aria-label="Search by name or username"></div><div class="a7card a7tw" id="a7tbl"></div>';
+  body(h);
+  document.getElementById('a7q').oninput=draw;
+  draw();
+ }).catch(fail);
+}
+function draw(){
+ var t=document.getElementById('a7tbl');if(!t)return;
+ var q=(document.getElementById('a7q').value||'').trim().toLowerCase();
+ var l=rows.filter(function(s){return !q||String(s.full_name||'').toLowerCase().indexOf(q)>-1||String(s.username||'').toLowerCase().indexOf(q)>-1;});
+ if(!rows.length){t.innerHTML='<p class="a7em">No active students right now.</p>';return;}
+ if(!l.length){t.innerHTML='<p class="a7em">No matches.</p>';return;}
+ var h='<div style="overflow-x:auto"><table class="a7tb" style="min-width:600px"><thead><tr><th>NAME</th><th>USERNAME</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody>';
+ l.forEach(function(s){
+  var p=s.status==='paused',sid=esc(s.session_id);
+  h+='<tr><td style="font-weight:800">'+esc(s.full_name||'-')+'</td><td>'+esc(s.username||'-')+'</td><td style="white-space:nowrap">'+(p?'<span class="a7pa">Paused</span>':'<span class="a7ac">Active</span>')+'</td><td><button type="button" class="a7ab'+(p?' rs':'')+'" aria-label="'+(p?'Resume':'Pause')+'" onclick="__a7.'+(p?'resume':'pause')+'(\''+sid+'\')">'+(p?I.play:I.pause)+'</button></td></tr>';});
+ h+='</tbody></table></div>';
+ t.innerHTML=h;
+}
+function reload(){if(cur)students(cur.exam_id);render();}
+function find(sid){return rows.filter(function(s){return s.session_id===sid;})[0];}
+function pause(sid){
+ var s=find(sid);if(!s)return;
+ ask('Pause attempt?',(s.full_name||'This candidate')+' cannot answer until the attempt is resumed. The timer stops.','Confirm',false,function(done){
+  rpc('admin_pause_attempt',{p_session_id:sid}).then(function(){done();toast('Paused '+(s.full_name||''));reload();}).catch(function(e){done();toast('Failed: '+((e&&e.message)||e));});
+ });
+}
+function resume(sid){
+ var s=find(sid);if(!s)return;
+ rpc('admin_resume_attempt',{p_session_id:sid}).then(function(){toast('Resumed '+(s.full_name||''));reload();}).catch(function(e){toast('Failed: '+((e&&e.message)||e));});
+}
+
+/* SUBMISSIONS */
+function subs(id){
+ Promise.all([byId(id),rpc('admin_submissions',{p_exam_id:id})]).then(function(r){
+  var c=r[0];if(!c){fail('Course not found');return;}
+  cur=c;var a=arr(r[1]);
+  var h=bk()+'<h2 class="a7h2s">Submissions</h2><p class="a7sub" style="margin-bottom:18px">'+esc(c.code)+' - '+a.length+' Submissions</p>';
+  if(!a.length){h+='<div class="a7card a7tw" style="margin-top:0"><p class="a7em">No submissions yet.</p></div>';}
+  else{
+   h+='<div class="a7card a7tw" style="margin-top:0"><table class="a7tb fx"><thead><tr><th>NAME</th><th>USERNAME</th><th>TIME USED</th></tr></thead><tbody>';
+   a.forEach(function(s){h+='<tr><td style="font-weight:800">'+esc(s.full_name||'-')+'</td><td>'+esc(s.username||'-')+'</td><td><div class="a7us">'+dur(s.time_used_seconds)+'</div><div class="a7us2">Start: '+hm(s.started_at)+' - Submitted: '+hm(s.submitted_at)+'</div></td></tr>';});
+   h+='</tbody></table></div>';
+  }
+  body(h);
+ }).catch(fail);
+}
+
+window.__a7={close:close,details:details,students:students,subs:subs,pause:pause,resume:resume,render:render};
+try{
+ if(typeof app!=='undefined'&&app.admin){
+  app.admin.loadAttempts=render;app.admin.aaCourses=render;
+  app.admin.aaDetails=details;app.admin.aaStudents=students;app.admin.aaSubs=subs;
+ }
+}catch(e){}
+function run(){var el=document.getElementById('adm-res-att');if(el&&el.offsetParent!==null)render();}
+setTimeout(run,1200);setTimeout(run,2600);
+})();
+</script>
 </body>
 </html>
 
